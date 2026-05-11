@@ -12,6 +12,68 @@ export default function HomePage() {
 
   return (
     <>
+      <style>{`
+        .hero-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #fff;
+          color: #1A1A1A;
+          text-decoration: none;
+          padding: 14px 28px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 700;
+          font-family: var(--font-lato);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          transition: all 0.2s;
+        }
+        .hero-btn-primary:hover { background: #f0f0f0; }
+        .hero-btn-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: transparent;
+          color: #fff;
+          text-decoration: none;
+          padding: 14px 28px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 700;
+          font-family: var(--font-lato);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          border: 2px solid rgba(255,255,255,0.5);
+          transition: all 0.2s;
+        }
+        .hero-btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+        .cat-strip-link {
+          flex: 1 0 auto;
+          text-decoration: none;
+          padding: 16px 24px;
+          text-align: center;
+          border-right: 1px solid #333;
+          transition: background 0.15s, color 0.15s;
+          font-family: var(--font-lato);
+          font-size: 13px;
+          font-weight: 700;
+          color: #aaa;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          white-space: nowrap;
+        }
+        .cat-strip-link:hover { background: #D32F2F; color: #fff; }
+        .two-col-section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+        }
+        @media (max-width: 768px) {
+          .two-col-section { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       {/* ── HERO ── */}
       <section style={{ background: '#D32F2F', padding: '80px 24px 72px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
@@ -25,15 +87,11 @@ export default function HomePage() {
             Jobs, Scholarships &amp; Study Abroad Programs — Updated Every Day
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/jobs" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fff', color: '#1A1A1A', textDecoration: 'none', padding: '14px 28px', borderRadius: 6, fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.05em', transition: 'all 0.2s' }}>
-              Browse Daily Opportunities
-            </Link>
-            <Link href="/newsletter" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', color: '#fff', textDecoration: 'none', padding: '14px 28px', borderRadius: 6, fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.05em', border: '2px solid rgba(255,255,255,0.5)', transition: 'all 0.2s' }}>
-              Get Free Newsletter
-            </Link>
+            <Link href="/jobs" className="hero-btn-primary">Browse Daily Opportunities</Link>
+            <Link href="/newsletter" className="hero-btn-secondary">Get Free Newsletter</Link>
           </div>
 
-          {/* Stats strip */}
+          {/* Stats */}
           <div style={{ display: 'flex', gap: 40, marginTop: 48, flexWrap: 'wrap' }}>
             {[['5', 'Categories'], ['Daily', 'Updates'], ['Free', 'Forever']].map(([num, label]) => (
               <div key={label}>
@@ -45,21 +103,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CATEGORY QUICK LINKS ── */}
-      <section style={{ background: '#1A1A1A', padding: '0' }}>
+      {/* ── CATEGORY STRIP ── */}
+      <section style={{ background: '#1A1A1A' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', overflowX: 'auto' }}>
           {Object.entries(categoryMeta).map(([slug, meta]) => (
-            <Link key={slug} href={`/${slug}`} style={{
-              flex: '1 0 auto', textDecoration: 'none', padding: '16px 24px', textAlign: 'center',
-              borderRight: '1px solid #333', transition: 'background 0.15s',
-              fontFamily: 'var(--font-lato)', fontSize: 13, fontWeight: 700, color: '#aaa',
-              textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap'
-            }}
-              onMouseOver={e => { (e.currentTarget as HTMLElement).style.background = '#D32F2F'; (e.currentTarget as HTMLElement).style.color = '#fff' }}
-              onMouseOut={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#aaa' }}
-            >
-              {meta.label}
-            </Link>
+            <Link key={slug} href={`/${slug}`} className="cat-strip-link">{meta.label}</Link>
           ))}
         </div>
       </section>
@@ -80,15 +128,13 @@ export default function HomePage() {
 
       {/* ── STUDY ABROAD + ENTREPRENEURSHIP ── */}
       <section style={{ background: '#fff', padding: '64px 24px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }} className="two-col-section">
-
+        <div style={{ maxWidth: 1200, margin: '0 auto' }} className="two-col-section">
           <div>
             <SectionHeading title="Study Abroad" href="/study-abroad" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {studyAbroad.length > 0 ? studyAbroad.map(p => <PostCard key={p.slug} post={p} />) : <EmptyState category="study-abroad" />}
             </div>
           </div>
-
           <div>
             <SectionHeading title="Entrepreneurship" href="/entrepreneurship" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -107,17 +153,10 @@ export default function HomePage() {
           {growthMindset.length > 0 ? growthMindset.map(p => <PostCard key={p.slug} post={p} size="large" />) : <EmptyState category="growth-mindset" />}
         </div>
       </SectionBlock>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .two-col-section { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </>
   )
 }
 
-/* ── Helpers ── */
 function SectionHeading({ title, href }: { title: string; href: string }) {
   return (
     <div style={{ marginBottom: 24 }}>
@@ -145,7 +184,7 @@ function EmptyState({ category }: { category: string }) {
   return (
     <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', border: '2px dashed #E5E5E5', borderRadius: 8 }}>
       <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa' }}>
-        No posts yet in this category. Add your first <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: 3 }}>content/{category}/</code> MDX file to get started.
+        Add your first <code style={{ background: '#f5f5f5', padding: '2px 6px', borderRadius: 3 }}>content/{category}/</code> MDX file to publish here.
       </p>
     </div>
   )
