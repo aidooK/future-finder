@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { getPost, getPostSlugs, getAllPosts, categoryMeta, isDeadlineUrgent, formatDate } from '@/lib/content'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import PostCard from '@/components/ui/PostCard'
 import NewsletterSignup from '@/components/ui/NewsletterSignup'
@@ -24,8 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {}
   return {
     title: post.title,
-    description: post.excerpt || `${post.title} — full details, eligibility and application guide on Future Finder.`,
-    openGraph: { title: post.title, description: post.excerpt }
+    description: post.excerpt || `${post.title} — full details and application guide on Future Finder.`,
   }
 }
 
@@ -40,8 +38,85 @@ export default function PostPage({ params }: Props) {
   const urgent = isDeadlineUrgent(post.deadline)
   const related = getAllPosts(category).filter(p => p.slug !== slug).slice(0, 3)
 
+  // Convert markdown to basic HTML for static export
+  const contentHtml = post.content
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/^(?!<[hul]|<li|<strong|<em|<a)(.+)$/gm, '<p>$1</p>')
+    .replace(/\n\n/g, '')
+
   return (
     <>
+      <style>{`
+        .post-layout {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 48px 24px;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 48px;
+          align-items: start;
+        }
+        @media (min-width: 900px) {
+          .post-layout { grid-template-columns: 1fr 320px; }
+        }
+        .summary-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px 24px;
+        }
+        @media (min-width: 500px) {
+          .summary-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .post-content h2 {
+          font-family: var(--font-oswald);
+          font-size: 22px;
+          font-weight: 700;
+          color: #1A1A1A;
+          margin: 32px 0 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+        }
+        .post-content h3 {
+          font-family: var(--font-oswald);
+          font-size: 18px;
+          font-weight: 600;
+          color: #1A1A1A;
+          margin: 24px 0 8px;
+        }
+        .post-content p { margin-bottom: 16px; font-family: var(--font-lato); font-size: 16px; line-height: 1.8; color: #333; }
+        .post-content ul { margin: 0 0 16px 20px; }
+        .post-content li { margin-bottom: 6px; font-family: var(--font-lato); font-size: 15px; line-height: 1.7; color: #333; }
+        .post-content a { color: #D32F2F; }
+        .post-content strong { color: #1A1A1A; font-weight: 700; }
+        .post-content table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .post-content th { background: #1A1A1A; color: #fff; padding: 10px 14px; font-family: var(--font-oswald); text-align: left; }
+        .post-content td { padding: 10px 14px; border-bottom: 1px solid #E5E5E5; font-family: var(--font-lato); font-size: 14px; }
+        .apply-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #D32F2F;
+          color: #fff;
+          text-decoration: none;
+          padding: 12px 24px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 700;
+          font-family: var(--font-lato);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          transition: background 0.2s;
+        }
+        .apply-btn:hover { background: #B71C1C; }
+      `}</style>
+
       {/* Breadcrumb */}
       <div style={{ background: '#1A1A1A', padding: '12px 24px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'var(--font-lato)', fontSize: 12, color: '#666' }}>
@@ -53,13 +128,12 @@ export default function PostPage({ params }: Props) {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px', display: 'grid', gridTemplateColumns: '1fr 340px', gap: 48, alignItems: 'start' }} className="post-layout">
-
+      <div className="post-layout">
         {/* Main content */}
         <article>
           {/* Category + Deadline */}
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
-            <span style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', fontFamily: 'var(--font-lato)', background: meta.color + '18', color: meta.color }}>
+            <span style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', fontFamily: 'var(--font-lato)', background: (meta.color || '#D32F2F') + '18', color: meta.color }}>
               {meta.label}
             </span>
             {post.deadline && (
@@ -82,31 +156,34 @@ export default function PostPage({ params }: Props) {
             <h3 style={{ fontFamily: 'var(--font-oswald)', fontSize: 16, fontWeight: 600, color: '#D32F2F', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>
               Quick Summary
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 24px' }} className="summary-grid">
+            <div className="summary-grid">
               {post.location && <SummaryItem label="Location" value={post.location} />}
               {post.deadline && <SummaryItem label="Deadline" value={formatDate(post.deadline)} urgent={urgent} />}
               {post.benefit && <SummaryItem label="Benefit" value={post.benefit} />}
             </div>
             {post.applyUrl && (
-              <a href={post.applyUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 20, background: '#D32F2F', color: '#fff', textDecoration: 'none', padding: '12px 24px', borderRadius: 6, fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <a href={post.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-btn" style={{ marginTop: 20, display: 'inline-flex' }}>
                 Apply Now →
               </a>
             )}
           </div>
 
-          {/* MDX Content */}
-          <div style={{ fontFamily: 'var(--font-lato)', fontSize: 16, lineHeight: 1.8, color: '#333' }} className="post-content">
-            <MDXRemote source={post.content} />
-          </div>
+          {/* Post Content */}
+          <div
+            className="post-content"
+            dangerouslySetInnerHTML={{ __html: contentHtml }}
+          />
 
           {/* Inline newsletter */}
           <NewsletterSignup variant="inline" />
 
-          {/* Apply CTA at bottom */}
+          {/* Bottom Apply CTA */}
           {post.applyUrl && (
             <div style={{ background: '#1A1A1A', padding: '24px', borderRadius: 8, textAlign: 'center', margin: '32px 0' }}>
-              <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', marginBottom: 16 }}>Ready to apply? Don't wait — deadlines move fast.</p>
-              <a href={post.applyUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+              <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', marginBottom: 16 }}>
+                Ready to apply? Don't wait — deadlines move fast.
+              </p>
+              <a href={post.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-btn">
                 Apply for this Opportunity →
               </a>
             </div>
@@ -115,20 +192,18 @@ export default function PostPage({ params }: Props) {
 
         {/* Sidebar */}
         <aside style={{ position: 'sticky', top: 80 }}>
-          {/* Share */}
           <div style={{ background: '#F5F5F5', borderRadius: 8, padding: '20px', marginBottom: 24 }}>
-            <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Share this Opportunity</h4>
+            <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Share</h4>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {[['WhatsApp', '#25D366'], ['Telegram', '#0088cc'], ['Twitter', '#1DA1F2'], ['Facebook', '#1877F2']].map(([name, color]) => (
+              {[['WhatsApp', '#25D366'], ['Telegram', '#0088cc'], ['Twitter', '#1DA1F2']].map(([name, color]) => (
                 <span key={name} style={{ padding: '8px 14px', background: color, color: '#fff', borderRadius: 4, fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-lato)', cursor: 'pointer' }}>{name}</span>
               ))}
             </div>
           </div>
 
-          {/* Related posts */}
           {related.length > 0 && (
             <div>
-              <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Related Opportunities</h4>
+              <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Related</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {related.map(p => <PostCard key={p.slug} post={p} />)}
               </div>
@@ -136,20 +211,6 @@ export default function PostPage({ params }: Props) {
           )}
         </aside>
       </div>
-
-      <style>{`
-        .post-layout { grid-template-columns: 1fr !important; }
-        @media (min-width: 900px) { .post-layout { grid-template-columns: 1fr 320px !important; } }
-        .summary-grid { grid-template-columns: 1fr !important; }
-        @media (min-width: 500px) { .summary-grid { grid-template-columns: 1fr 1fr !important; } }
-        .post-content h2 { font-family: var(--font-oswald); font-size: 24px; font-weight: 700; color: #1A1A1A; margin: 32px 0 12px; text-transform: uppercase; letter-spacing: 0.02em; }
-        .post-content h3 { font-family: var(--font-oswald); font-size: 18px; font-weight: 600; color: #1A1A1A; margin: 24px 0 8px; }
-        .post-content p { margin-bottom: 16px; }
-        .post-content ul, .post-content ol { margin: 0 0 16px 20px; }
-        .post-content li { margin-bottom: 6px; }
-        .post-content a { color: #D32F2F; }
-        .post-content strong { color: #1A1A1A; }
-      `}</style>
     </>
   )
 }

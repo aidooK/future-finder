@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  output: 'export',
+  trailingSlash: true,
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: '**' }
-    ]
-  }
+    unoptimized: true,
+  },
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
 export default nextConfig
