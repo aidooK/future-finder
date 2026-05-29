@@ -59,7 +59,7 @@ export default function Header() {
           border-bottom: 1px solid #222;
         }
         .site-logo {
-          height: 40px;
+          height: 48px;
           width: auto;
           filter: brightness(0) invert(1);
           display: block;
