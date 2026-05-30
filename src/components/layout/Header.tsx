@@ -61,14 +61,14 @@ export default function Header() {
         .logo-pill {
           background: #ffffff;
           border-radius: 8px;
-          padding: 5px 12px;
+          padding: 6px 14px;
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 46px;
+          height: 54px;
         }
         .site-logo {
-          height: 34px;
+          height: 42px;
           width: auto;
           display: block;
           object-fit: contain;
