@@ -6,6 +6,8 @@ import NewsletterSignup from '@/components/ui/NewsletterSignup'
 import type { Metadata } from 'next'
 
 const validCategories = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
+const SITE_URL = 'https://futurefinder.blog'
+const DEFAULT_OG_IMAGE = '/logo.png'
 
 type Props = { params: { category: string; slug: string } }
 
@@ -21,9 +23,43 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost(params.category, params.slug)
   if (!post) return {}
+
+  const description = post.excerpt || `${post.title} — full details and application guide on Future Finder.`
+  const pageUrl = `${SITE_URL}/${params.category}/${params.slug}/`
+
+  // post.coverImage is expected to be a root-relative path like "/images/posts/foo.jpg"
+  // Falls back to the site default logo if the post has no cover image set.
+  const imageUrl = post.coverImage
+    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
+    : `${SITE_URL}${DEFAULT_OG_IMAGE}`
+
   return {
     title: post.title,
-    description: post.excerpt || `${post.title} — full details and application guide on Future Finder.`,
+    description,
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      type: 'article',
+      url: pageUrl,
+      siteName: 'Future Finder',
+      title: post.title,
+      description,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      images: [imageUrl],
+    },
   }
 }
 
