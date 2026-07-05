@@ -10,6 +10,17 @@ const SITE_URL = 'https://futurefinder.blog'
 
 type Props = { params: { category: string; slug: string } }
 
+// Resolves the image used for BOTH the visible hero <img> and the OG/Twitter
+// social preview. Priority: real coverImage from frontmatter > build-time
+// generated static PNG at /public/og/[category]-[slug].png (see
+// scripts/generate-og-images.mjs, which runs before `next build`).
+function resolveOgImage(post: { coverImage?: string }, category: string, slug: string): string {
+  if (post.coverImage) {
+    return post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`
+  }
+  return `${SITE_URL}/og/${category}-${slug}.png`
+}
+
 export async function generateStaticParams() {
   const paths: { category: string; slug: string }[] = []
   for (const category of validCategories) {
@@ -25,34 +36,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const description = post.excerpt || `${post.title} — full details and application guide on Future Finder.`
   const pageUrl = `${SITE_URL}/${params.category}/${params.slug}/`
-  const urgent = isDeadlineUrgent(post.deadline)
-
-  // Use real coverImage if the post has one; otherwise auto-generate a
-  // branded OG card via /api/og so no post is ever left with a generic logo.
-  const imageUrl = post.coverImage
-    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
-    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&category=${params.category}&urgent=${urgent}`
+  const imageUrl = resolveOgImage(post, params.category, params.slug)
 
   return {
     title: post.title,
     description,
-    alternates: {
-      canonical: pageUrl,
-    },
+    alternates: { canonical: pageUrl },
     openGraph: {
       type: 'article',
       url: pageUrl,
       siteName: 'Future Finder',
       title: post.title,
       description,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -73,7 +69,7 @@ export default function PostPage({ params }: Props) {
   const meta = categoryMeta[category]
   const urgent = isDeadlineUrgent(post.deadline)
   const related = getAllPosts(category).filter(p => p.slug !== slug).slice(0, 3)
-  const ogImageUrl = post.coverImage || `/api/og?title=${encodeURIComponent(post.title)}&category=${category}&urgent=${urgent}`
+  const heroImageUrl = resolveOgImage(post, category, slug)
 
   const contentHtml = post.content
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
@@ -109,6 +105,7 @@ export default function PostPage({ params }: Props) {
           border-radius: 12px;
           margin-bottom: 32px;
           display: block;
+          background: #0F0F0F;
         }
         .summary-grid {
           display: grid;
@@ -173,8 +170,7 @@ export default function PostPage({ params }: Props) {
 
       <div className="post-layout">
         <article>
-          {/* NEW: Hero image — real coverImage or auto-generated branded card */}
-          <img src={ogImageUrl} alt={post.title} className="post-hero" />
+          <img src={heroImageUrl} alt={post.title} className="post-hero" />
 
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
             <span style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', fontFamily: 'var(--font-lato)', background: (meta.color || '#D32F2F') + '18', color: meta.color }}>
