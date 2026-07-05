@@ -7,7 +7,6 @@ import type { Metadata } from 'next'
 
 const validCategories = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
 const SITE_URL = 'https://futurefinder.blog'
-const DEFAULT_OG_IMAGE = '/logo.png'
 
 type Props = { params: { category: string; slug: string } }
 
@@ -26,12 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const description = post.excerpt || `${post.title} — full details and application guide on Future Finder.`
   const pageUrl = `${SITE_URL}/${params.category}/${params.slug}/`
+  const urgent = isDeadlineUrgent(post.deadline)
 
-  // post.coverImage is expected to be a root-relative path like "/images/posts/foo.jpg"
-  // Falls back to the site default logo if the post has no cover image set.
+  // Use real coverImage if the post has one; otherwise auto-generate a
+  // branded OG card via /api/og so no post is ever left with a generic logo.
   const imageUrl = post.coverImage
     ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
-    : `${SITE_URL}${DEFAULT_OG_IMAGE}`
+    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&category=${params.category}&urgent=${urgent}`
 
   return {
     title: post.title,
@@ -73,8 +73,8 @@ export default function PostPage({ params }: Props) {
   const meta = categoryMeta[category]
   const urgent = isDeadlineUrgent(post.deadline)
   const related = getAllPosts(category).filter(p => p.slug !== slug).slice(0, 3)
+  const ogImageUrl = post.coverImage || `/api/og?title=${encodeURIComponent(post.title)}&category=${category}&urgent=${urgent}`
 
-  // Convert markdown to basic HTML for static export
   const contentHtml = post.content
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -101,6 +101,14 @@ export default function PostPage({ params }: Props) {
         }
         @media (min-width: 900px) {
           .post-layout { grid-template-columns: 1fr 320px; }
+        }
+        .post-hero {
+          width: 100%;
+          aspect-ratio: 1200 / 630;
+          object-fit: cover;
+          border-radius: 12px;
+          margin-bottom: 32px;
+          display: block;
         }
         .summary-grid {
           display: grid;
@@ -153,7 +161,6 @@ export default function PostPage({ params }: Props) {
         .apply-btn:hover { background: #B71C1C; }
       `}</style>
 
-      {/* Breadcrumb */}
       <div style={{ background: '#1A1A1A', padding: '12px 24px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'var(--font-lato)', fontSize: 12, color: '#666' }}>
           <Link href="/" style={{ color: '#666', textDecoration: 'none' }}>Home</Link>
@@ -165,9 +172,10 @@ export default function PostPage({ params }: Props) {
       </div>
 
       <div className="post-layout">
-        {/* Main content */}
         <article>
-          {/* Category + Deadline */}
+          {/* NEW: Hero image — real coverImage or auto-generated branded card */}
+          <img src={ogImageUrl} alt={post.title} className="post-hero" />
+
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
             <span style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', fontFamily: 'var(--font-lato)', background: (meta.color || '#D32F2F') + '18', color: meta.color }}>
               {meta.label}
@@ -182,12 +190,10 @@ export default function PostPage({ params }: Props) {
             </span>
           </div>
 
-          {/* Title */}
           <h1 style={{ fontFamily: 'var(--font-oswald)', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 700, color: '#1A1A1A', lineHeight: 1.15, marginBottom: 32 }}>
             {post.title}
           </h1>
 
-          {/* Quick Summary Box */}
           <div style={{ borderLeft: '4px solid #D32F2F', background: '#FFEBEE', padding: '20px 24px', borderRadius: '0 8px 8px 0', marginBottom: 40 }}>
             <h3 style={{ fontFamily: 'var(--font-oswald)', fontSize: 16, fontWeight: 600, color: '#D32F2F', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>
               Quick Summary
@@ -204,16 +210,10 @@ export default function PostPage({ params }: Props) {
             )}
           </div>
 
-          {/* Post Content */}
-          <div
-            className="post-content"
-            dangerouslySetInnerHTML={{ __html: contentHtml }}
-          />
+          <div className="post-content" dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
-          {/* Inline newsletter */}
           <NewsletterSignup variant="inline" />
 
-          {/* Bottom Apply CTA */}
           {post.applyUrl && (
             <div style={{ background: '#1A1A1A', padding: '24px', borderRadius: 8, textAlign: 'center', margin: '32px 0' }}>
               <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', marginBottom: 16 }}>
@@ -226,7 +226,6 @@ export default function PostPage({ params }: Props) {
           )}
         </article>
 
-        {/* Sidebar */}
         <aside style={{ position: 'sticky', top: 80 }}>
           <div style={{ background: '#F5F5F5', borderRadius: 8, padding: '20px', marginBottom: 24 }}>
             <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Share</h4>
