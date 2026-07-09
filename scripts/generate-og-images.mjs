@@ -237,6 +237,7 @@ async function main() {
 
   let generated = 0
   let skipped = 0
+  let failed = 0
 
   for (const category of categories) {
     const dir = path.join(CONTENT_DIR, category)
@@ -260,13 +261,25 @@ async function main() {
       }
 
       const urgent = isDeadlineUrgent(data.deadline)
-      await generateOne(fontData, { title: data.title || slug, category, urgent, outPath })
-      generated++
-      console.log(`✓ generated /public/og/${category}-${slug}.png`)
+      try {
+        await generateOne(fontData, { title: data.title || slug, category, urgent, outPath })
+        generated++
+        console.log(`✓ generated /public/og/${category}-${slug}.png`)
+      } catch (err) {
+        // NEVER let one post's OG image failure take down the entire site build.
+        // Log it clearly, skip it, keep going — that post just falls back to
+        // the default logo.png until the underlying issue is fixed.
+        failed++
+        console.error(`✗ FAILED to generate OG image for ${category}/${slug} — falling back to default image.`)
+        console.error(`  Reason: ${err.message}`)
+      }
     }
   }
 
-  console.log(`\nDone. Generated: ${generated}, Skipped (already have image or coverImage set): ${skipped}`)
+  console.log(`\nDone. Generated: ${generated}, Skipped: ${skipped}, Failed (using fallback image): ${failed}`)
+  if (failed > 0) {
+    console.log(`\n⚠ ${failed} post(s) failed OG generation but the build continued. Check the log above and fix when convenient — these posts are still live, just without a custom social preview image.`)
+  }
 }
 
 main().catch(err => {
