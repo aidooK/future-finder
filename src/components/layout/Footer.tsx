@@ -78,8 +78,17 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* ── Permanent Anti-Scam Notice ── */}
+        <div style={{ borderTop: '1px solid #222', marginTop: 48, padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, flexWrap: 'wrap', background: '#0F0F0F' }}>
+          <span style={{ flexShrink: 0, background: '#D32F2F', color: '#fff', fontSize: 9, fontWeight: 900, fontFamily: 'var(--font-lato)', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 7px', borderRadius: 3 }}>Official Notice</span>
+          <p style={{ fontSize: 12, color: '#666', fontFamily: 'var(--font-lato)', lineHeight: 1.6, textAlign: 'center', margin: 0 }}>
+            <span style={{ color: '#D32F2F', fontWeight: 700 }}>Future Finder will never ask you for money.</span>{' '}
+            All opportunities on this site are free to access and apply for. Anyone claiming to be from Future Finder and requesting payment is a fraudster — do not engage.
+          </p>
+        </div>
+
         {/* Bottom bar */}
-        <div style={{ maxWidth: 1200, margin: '48px auto 0', padding: '20px 24px', borderTop: '1px solid #222', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '16px 24px', borderTop: '1px solid #1a1a1a', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
           <p style={{ fontSize: 13, color: '#555', fontFamily: 'var(--font-lato)' }}>© {new Date().getFullYear()} Future Finder. All rights reserved.</p>
           <p style={{ fontSize: 13, color: '#555', fontFamily: 'var(--font-lato)' }}>Built for African Youth 🌍</p>
         </div>

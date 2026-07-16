@@ -40,9 +40,10 @@ export function getPost(category: string, slug: string): Post | null {
 }
 
 export function getAllPosts(category?: string): PostMeta[] {
+  const VALID_CATEGORIES = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
   const categories = category
-    ? [category]
-    : ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
+    ? (VALID_CATEGORIES.includes(category) ? [category] : [])
+    : VALID_CATEGORIES
 
   const posts: PostMeta[] = []
   for (const cat of categories) {

@@ -3,6 +3,7 @@ import Script from 'next/script'
 import '../styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ScamWarningBanner from '@/components/ui/ScamWarningBanner'
 
 export const metadata: Metadata = {
   title: {
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
+        <ScamWarningBanner />
         <Header />
         <main>{children}</main>
         <Footer />
