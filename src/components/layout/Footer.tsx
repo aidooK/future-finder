@@ -52,11 +52,25 @@ export default function Footer() {
             <p style={{ fontSize: 14, lineHeight: 1.7, color: '#888', maxWidth: 280, fontFamily: 'var(--font-lato)' }}>
               Connecting African youth to real opportunities — jobs, scholarships, study abroad programs and entrepreneurship funding. Updated every day.
             </p>
-            <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
-              {['W', 'T', 'I', 'X'].map((s, i) => (
-                <div key={i} style={{ width: 36, height: 36, background: '#222', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: '#666', cursor: 'pointer', fontFamily: 'var(--font-lato)', fontWeight: 700 }}>
-                  {s}
-                </div>
+            <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
+              {[
+                { label: 'WhatsApp', href: 'https://linktr.ee/future.finder', emoji: '💬', title: 'Join our WhatsApp channel' },
+                { label: 'Instagram', href: 'https://www.instagram.com/future.finder_/', emoji: '📸', title: 'Follow on Instagram' },
+                { label: 'Telegram', href: 'https://t.me/futurefinder_gh', emoji: '✈️', title: 'Join our Telegram channel' },
+                { label: 'X', href: 'https://x.com/futurefinder_gh', emoji: '𝕏', title: 'Follow on X' },
+              ].map(({ label, href, emoji, title }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={title}
+                  style={{ width: 38, height: 38, background: '#222', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, textDecoration: 'none', transition: 'background 0.15s' }}
+                  onMouseOver={e => (e.currentTarget.style.background = '#D32F2F')}
+                  onMouseOut={e => (e.currentTarget.style.background = '#222')}
+                >
+                  {emoji}
+                </a>
               ))}
             </div>
           </div>
