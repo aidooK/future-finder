@@ -56,8 +56,8 @@ export default function Footer() {
               {[
                 { label: 'WhatsApp', href: 'https://linktr.ee/future.finder', emoji: '💬', title: 'Join our WhatsApp channel' },
                 { label: 'Instagram', href: 'https://www.instagram.com/future.finder_/', emoji: '📸', title: 'Follow on Instagram' },
-                { label: 'Telegram', href: 'https://t.me/futurefinder_gh', emoji: '✈️', title: 'Join our Telegram channel' },
-                { label: 'X', href: 'https://x.com/futurefinder_gh', emoji: '𝕏', title: 'Follow on X' },
+                { label: 'Telegram', href: 'https://linktr.ee/future.finder', emoji: '✈️', title: 'Join our Telegram channel' },
+                { label: 'X', href: 'https://x.com/futurefinderblog', emoji: '𝕏', title: 'Follow on X' },
               ].map(({ label, href, emoji, title }) => (
                 <a
                   key={label}
