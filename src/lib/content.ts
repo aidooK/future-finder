@@ -76,7 +76,11 @@ export function isDeadlineUrgent(deadline?: string): boolean {
 }
 
 export function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('en-GB', {
+  if (!dateStr) return ''
+  // Return non-date strings as-is (e.g. "Rolling basis", "Discontinued")
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return dateStr
+  return d.toLocaleDateString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric'
   })
 }
