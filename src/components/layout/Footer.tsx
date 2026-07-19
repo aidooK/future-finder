@@ -54,10 +54,11 @@ export default function Footer() {
             </p>
             <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
               {[
-                { label: 'WhatsApp', href: 'https://linktr.ee/future.finder', emoji: '💬', title: 'Join our WhatsApp channel' },
-                { label: 'Instagram', href: 'https://www.instagram.com/future.finder_/', emoji: '📸', title: 'Follow on Instagram' },
-                { label: 'Telegram', href: 'https://linktr.ee/future.finder', emoji: '✈️', title: 'Join our Telegram channel' },
-                { label: 'X', href: 'https://x.com/futurefinderblog', emoji: '𝕏', title: 'Follow on X' },
+                { label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029Vaz4lUtFMqrXJsFTCR3I', emoji: '💬', title: 'Join our WhatsApp channel' },
+                { label: 'Instagram', href: 'https://www.instagram.com/futurefinder.blog', emoji: '📸', title: 'Follow on Instagram' },
+                { label: 'Telegram', href: 'https://t.me/futurefinderblog', emoji: '✈️', title: 'Join our Telegram channel' },
+                { label: 'X', href: 'https://x.com/futurefinderblg', emoji: '𝕏', title: 'Follow on X' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/company/futurefinder-blog/', emoji: '💼', title: 'Follow on LinkedIn' },
               ].map(({ label, href, emoji, title }) => (
                 <a
                   key={label}
