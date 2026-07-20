@@ -157,7 +157,7 @@ export default function AboutPage() {
           Future Finder is a free, daily opportunities platform built for African and Ghanaian youth — surfacing real jobs, scholarships, funding, and growth resources so the next big break is always within reach.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', position: 'relative' }}>
-          <Link href="/jobs" className="btn-white">Browse Opportunities</Link>
+          <Link href="/jobs/" className="btn-white">Browse Opportunities</Link>
           <a href="mailto:office.futurefinder@gmail.com" className="btn-ghost">Partner With Us</a>
         </div>
       </section>
@@ -268,7 +268,7 @@ export default function AboutPage() {
             <a href="mailto:office.futurefinder@gmail.com" className="btn-white">
               Contact Us
             </a>
-            <Link href="/newsletter" className="btn-ghost">
+            <Link href="/newsletter/" className="btn-ghost">
               See Our Audience
             </Link>
           </div>
@@ -284,8 +284,8 @@ export default function AboutPage() {
             You have already done the hard part — you showed up, you stayed curious, and you kept pushing. Let us help you take the next step. Browse our latest listings — it costs nothing, and it only takes a moment to find something that could change everything.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 16 }}>
-            <Link href="/scholarships" className="btn-primary">Browse Scholarships</Link>
-            <Link href="/jobs" className="btn-secondary">Browse Jobs</Link>
+            <Link href="/scholarships/" className="btn-primary">Browse Scholarships</Link>
+            <Link href="/jobs/" className="btn-secondary">Browse Jobs</Link>
           </div>
           <p style={{ fontFamily: 'var(--font-lato)', fontSize: 13, color: '#999', textAlign: 'center', marginTop: 24 }}>
             Follow us on{' '}

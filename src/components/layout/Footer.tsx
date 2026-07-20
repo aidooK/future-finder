@@ -9,11 +9,11 @@ const categories = [
 ]
 
 const company = [
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'Newsletter', href: '/newsletter' },
-  { label: 'Post an Opportunity', href: '/submit' },
-  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Newsletter', href: '/newsletter/' },
+  { label: 'Post an Opportunity', href: '/submit/' },
+  { label: 'Privacy Policy', href: '/privacy/' },
 ]
 
 export default function Footer() {

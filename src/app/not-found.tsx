@@ -25,7 +25,7 @@ export default function NotFound() {
         </p>
         <div className="nf-links">
           <Link href="/" className="nf-btn">Go to Homepage</Link>
-          <Link href="/jobs" className="nf-btn-ghost">Browse Jobs</Link>
+          <Link href="/jobs/" className="nf-btn-ghost">Browse Jobs</Link>
         </div>
         <div className="nf-cats">
           {[
