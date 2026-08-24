@@ -31,3 +31,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# OG images are regenerated automatically on every build (see prebuild script)
+/public/og/
