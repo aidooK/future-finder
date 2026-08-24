@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getPost, getPostSlugs, getAllPosts, categoryMeta, isDeadlineUrgent, formatDate } from '@/lib/content'
 import Link from 'next/link'
+import ShareBox from '@/components/ui/ShareBox'
 import PostCard from '@/components/ui/PostCard'
 import NewsletterSignup from '@/components/ui/NewsletterSignup'
 import type { Metadata } from 'next'
@@ -223,14 +224,7 @@ export default function PostPage({ params }: Props) {
         </article>
 
         <aside style={{ position: 'sticky', top: 80 }}>
-          <div style={{ background: '#F5F5F5', borderRadius: 8, padding: '20px', marginBottom: 24 }}>
-            <h4 style={{ fontFamily: 'var(--font-oswald)', fontSize: 15, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16 }}>Share</h4>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {[['WhatsApp', '#25D366'], ['Telegram', '#0088cc'], ['Twitter', '#1DA1F2']].map(([name, color]) => (
-                <span key={name} style={{ padding: '8px 14px', background: color, color: '#fff', borderRadius: 4, fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-lato)', cursor: 'pointer' }}>{name}</span>
-              ))}
-            </div>
-          </div>
+          <ShareBox category={category} slug={slug} title={post.title} />
 
           {related.length > 0 && (
             <div>

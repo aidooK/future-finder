@@ -40,9 +40,10 @@ export function getPost(category: string, slug: string): Post | null {
 }
 
 export function getAllPosts(category?: string): PostMeta[] {
+  const VALID_CATEGORIES = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
   const categories = category
-    ? [category]
-    : ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
+    ? (VALID_CATEGORIES.includes(category) ? [category] : [])
+    : VALID_CATEGORIES
 
   const posts: PostMeta[] = []
   for (const cat of categories) {
@@ -75,7 +76,11 @@ export function isDeadlineUrgent(deadline?: string): boolean {
 }
 
 export function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('en-GB', {
+  if (!dateStr) return ''
+  // Return non-date strings as-is (e.g. "Rolling basis", "Discontinued")
+  const d = new Date(dateStr)
+  if (isNaN(d.getTime())) return dateStr
+  return d.toLocaleDateString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric'
   })
 }

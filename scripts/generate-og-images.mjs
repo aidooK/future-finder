@@ -231,8 +231,11 @@ async function main() {
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true })
 
+  const VALID_CATEGORIES = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
+
   const categories = fs.readdirSync(CONTENT_DIR).filter(d =>
-    fs.statSync(path.join(CONTENT_DIR, d)).isDirectory()
+    fs.statSync(path.join(CONTENT_DIR, d)).isDirectory() &&
+    VALID_CATEGORIES.includes(d)
   )
 
   let generated = 0

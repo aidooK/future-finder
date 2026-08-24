@@ -3,11 +3,11 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 const navLinks = [
-  { label: 'Jobs', href: '/jobs' },
-  { label: 'Scholarships', href: '/scholarships' },
-  { label: 'Study Abroad', href: '/study-abroad' },
-  { label: 'Entrepreneurship', href: '/entrepreneurship' },
-  { label: 'Growth Mindset', href: '/growth-mindset' },
+  { label: 'Jobs', href: '/jobs/' },
+  { label: 'Scholarships', href: '/scholarships/' },
+  { label: 'Study Abroad', href: '/study-abroad/' },
+  { label: 'Entrepreneurship', href: '/entrepreneurship/' },
+  { label: 'Growth Mindset', href: '/growth-mindset/' },
 ]
 
 export default function Header() {
@@ -99,7 +99,7 @@ export default function Header() {
             {navLinks.map(link => (
               <Link key={link.href} href={link.href} className="nav-link">{link.label}</Link>
             ))}
-            <Link href="/newsletter" className="nav-subscribe">Subscribe Free</Link>
+            <Link href="/newsletter/" className="nav-subscribe">Subscribe Free</Link>
           </nav>
 
           {/* Mobile Hamburger */}
@@ -118,7 +118,7 @@ export default function Header() {
             {navLinks.map(link => (
               <Link key={link.href} href={link.href} className="mobile-nav-link" onClick={() => setOpen(false)}>{link.label}</Link>
             ))}
-            <Link href="/newsletter" onClick={() => setOpen(false)}
+            <Link href="/newsletter/" onClick={() => setOpen(false)}
               style={{ display: 'block', marginTop: 16, background: '#D32F2F', color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.06em', padding: '13px 20px', borderRadius: 4, textAlign: 'center' }}>
               Subscribe Free
             </Link>

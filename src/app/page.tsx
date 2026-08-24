@@ -88,7 +88,7 @@ export default function HomePage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/jobs" className="hero-btn-primary">Browse Daily Opportunities</Link>
-            <Link href="/newsletter" className="hero-btn-secondary">Get Free Newsletter</Link>
+            <Link href="/newsletter/" className="hero-btn-secondary">Get Free Newsletter</Link>
           </div>
 
           {/* Stats */}

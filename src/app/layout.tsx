@@ -3,6 +3,8 @@ import Script from 'next/script'
 import '../styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ScamWarningBanner from '@/components/ui/ScamWarningBanner'
+import SocialFollowBand from '@/components/ui/SocialFollowBand'
 
 export const metadata: Metadata = {
   title: {
@@ -45,6 +47,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8702312820055642"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         {/* Google Analytics 4 */}
@@ -61,8 +69,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
+        <ScamWarningBanner />
         <Header />
         <main>{children}</main>
+        <SocialFollowBand />
         <Footer />
       </body>
     </html>

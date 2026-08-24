@@ -1,11 +1,7 @@
 [build]
   command = "npm run build"
-  destination = ".next"
+  destination = "out"
 
 [build.environment]
   NODE_VERSION = "20"
-
-[[redirects]]
-  from = "/blog/*"
-  to = "/:splat"
-  status = 301
+  NPM_FLAGS = "--prefer-offline"
