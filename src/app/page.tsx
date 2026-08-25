@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { getRecentPosts, categoryMeta } from '@/lib/content'
 import PostCard from '@/components/ui/PostCard'
 import NewsletterSignup from '@/components/ui/NewsletterSignup'
+import HeroSection from '@/components/ui/HeroSection'
+
 
 export default function HomePage() {
   const jobs = getRecentPosts('jobs', 4)
@@ -75,33 +77,9 @@ export default function HomePage() {
       `}</style>
 
       {/* ── HERO ── */}
-      <section style={{ background: '#D32F2F', padding: '80px 24px 72px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <p style={{ fontFamily: 'var(--font-lato)', fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#FFCDD2', marginBottom: 16 }}>
-            🌍 For African & Ghanaian Youth
-          </p>
-          <h1 style={{ fontFamily: 'var(--font-oswald)', fontSize: 'clamp(40px, 8vw, 72px)', fontWeight: 700, color: '#fff', lineHeight: 1.05, marginBottom: 20 }}>
-            Real Opportunities<br />for African Youth.<br />Daily.
-          </h1>
-          <p style={{ fontFamily: 'var(--font-lato)', fontSize: 18, color: '#FFCDD2', marginBottom: 36, maxWidth: 520, lineHeight: 1.6 }}>
-            Jobs, Scholarships &amp; Study Abroad Programs — Updated Every Day
-          </p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/jobs" className="hero-btn-primary">Browse Daily Opportunities</Link>
-            <Link href="/newsletter/" className="hero-btn-secondary">Get Free Newsletter</Link>
-          </div>
-
-          {/* Stats */}
-          <div style={{ display: 'flex', gap: 40, marginTop: 48, flexWrap: 'wrap' }}>
-            {[['5', 'Categories'], ['Daily', 'Updates'], ['Free', 'Forever']].map(([num, label]) => (
-              <div key={label}>
-                <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 28, fontWeight: 700, color: '#fff' }}>{num}</div>
-                <div style={{ fontFamily: 'var(--font-lato)', fontSize: 12, color: '#FFCDD2', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HeroSection>
+        
+      </HeroSection>
 
       {/* ── CATEGORY STRIP ── */}
       <section style={{ background: '#1A1A1A' }}>
@@ -153,6 +131,7 @@ export default function HomePage() {
           {growthMindset.length > 0 ? growthMindset.map(p => <PostCard key={p.slug} post={p} size="large" />) : <EmptyState category="growth-mindset" />}
         </div>
       </SectionBlock>
+    
     </>
   )
 }
