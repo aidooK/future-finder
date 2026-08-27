@@ -19,8 +19,8 @@ export default function HomePage() {
           text-decoration: none;
           padding: 16px 24px;
           text-align: center;
-          border-right: 1px solid #2A2A2A;
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          border-right: 1px solid #333;
+          transition: background 0.15s, color 0.15s;
           font-family: var(--font-lato);
           font-size: 13px;
           font-weight: 700;
@@ -28,30 +28,12 @@ export default function HomePage() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           white-space: nowrap;
-          position: relative;
         }
-        .cat-strip-link:hover { background: #D32F2F; color: #fff; transform: translateY(-1px); }
+        .cat-strip-link:hover { background: #D32F2F; color: #fff; }
         .two-col-section {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 48px;
-        }
-        .see-all-link {
-          font-family: var(--font-lato);
-          font-size: 12px;
-          font-weight: 700;
-          color: #D32F2F;
-          text-decoration: none;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          transition: transform 0.2s ease, color 0.2s ease;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-        }
-        .see-all-link:hover {
-          color: #B71C1C;
-          transform: translateX(3px);
         }
         @media (max-width: 768px) {
           .two-col-section { grid-template-columns: 1fr !important; }
@@ -65,8 +47,7 @@ export default function HomePage() {
       <section style={{ background: '#1A1A1A' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', overflowX: 'auto' }}>
           {Object.entries(categoryMeta).map(([slug, meta]) => (
-            /* NEW: Added trailing slash to match next.config.mjs `trailingSlash: true` */
-            <Link key={slug} href={`/${slug}/`} className="cat-strip-link">{meta.label}</Link>
+            <Link key={slug} href={`/${slug}`} className="cat-strip-link">{meta.label}</Link>
           ))}
         </div>
       </section>
@@ -121,9 +102,9 @@ function SectionHeading({ title, href }: { title: string; href: string }) {
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
         <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 26, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{title}</h2>
-        <Link href={href} className="see-all-link">See All →</Link>
+        <Link href={href} style={{ fontFamily: 'var(--font-lato)', fontSize: 12, fontWeight: 700, color: '#D32F2F', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.06em' }}>See All →</Link>
       </div>
-      <div style={{ width: 44, height: 3, background: '#D32F2F', borderRadius: 2 }} />
+      <div style={{ width: 40, height: 3, background: '#D32F2F' }} />
     </div>
   )
 }

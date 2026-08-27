@@ -6,14 +6,23 @@ import type { Metadata } from 'next'
 
 const validCategories = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
 
-type Props = { params: { category: string } }
+// ============================================================================
+// FIX: Next.js 15+ compatibility — `params` is a Promise and MUST be awaited.
+// Synchronous access (`params.category`) returned undefined, causing validCategories
+// check to fail and triggering 404 (notFound()) on all category pages.
+// ============================================================================
+
+// NEW: Props type updated to Promise<{ category: string }>
+type Props = { params: Promise<{ category: string }> }
 
 export async function generateStaticParams() {
   return validCategories.map(category => ({ category }))
 }
 
+// NEW: Await `params` in generateMetadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const meta = categoryMeta[params.category]
+  const { category } = await params
+  const meta = categoryMeta[category]
   if (!meta) return {}
   return {
     title: `${meta.label} for African Youth`,
@@ -21,8 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function CategoryPage({ params }: Props) {
-  const { category } = params
+// NEW: CategoryPage converted to `async` function and `await params` added
+export default async function CategoryPage({ params }: Props) {
+  const { category } = await params
   if (!validCategories.includes(category)) notFound()
 
   const meta = categoryMeta[category]

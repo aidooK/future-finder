@@ -36,7 +36,7 @@ export default function ScamWarningBanner() {
 
         /* ── Dismissable top banner ── */
         .scam-banner {
-          background: #B71C1C;
+          background: linear-gradient(90deg, #7F0909 0%, #B71C1C 50%, #D32F2F 100%);
           padding: 0;
           overflow: hidden;
           max-height: 200px;

@@ -1,6 +1,12 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/content'
 
+// ============================================================================
+// FIX: Added 'force-static' export config for static export compatibility in Next.js
+// Without this, `next build` fails with `output: 'export'` on static sitemaps.
+// ============================================================================
+export const dynamic = 'force-static'
+
 const SITE_URL = 'https://futurefinder.blog'
 
 export default function sitemap(): MetadataRoute.Sitemap {
