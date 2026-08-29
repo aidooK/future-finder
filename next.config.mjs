@@ -8,4 +8,8 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
+// module.exports = {
+//   allowedDevOrigins: ['192.168.56.1'],
+// };
+
 export default nextConfig
