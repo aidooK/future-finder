@@ -9,7 +9,13 @@ import type { Metadata } from 'next'
 const validCategories = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
 const SITE_URL = 'https://futurefinder.blog'
 
-type Props = { params: { category: string; slug: string } }
+// ============================================================================
+// FIX: Next.js 15+ compatibility — `params` is a Promise and MUST be awaited.
+// Synchronous access (`params.category`) returned undefined, causing 404 (notFound()).
+// ============================================================================
+
+// NEW: Props type updated to Promise<{ category: string; slug: string }>
+type Props = { params: Promise<{ category: string; slug: string }> }
 
 // Resolves the image used for BOTH the visible hero <img> and the OG/Twitter
 // social preview. Priority: real coverImage from frontmatter > build-time
@@ -31,13 +37,15 @@ export async function generateStaticParams() {
   return paths
 }
 
+// NEW: Await `params` in generateMetadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getPost(params.category, params.slug)
+  const { category, slug } = await params
+  const post = getPost(category, slug)
   if (!post) return {}
 
   const description = post.excerpt || `${post.title} — full details and application guide on Future Finder.`
-  const pageUrl = `${SITE_URL}/${params.category}/${params.slug}/`
-  const imageUrl = resolveOgImage(post, params.category, params.slug)
+  const pageUrl = `${SITE_URL}/${category}/${slug}/`
+  const imageUrl = resolveOgImage(post, category, slug)
 
   return {
     title: post.title,
@@ -60,8 +68,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function PostPage({ params }: Props) {
-  const { category, slug } = params
+// NEW: PostPage converted to `async` function and `await params` added
+export default async function PostPage({ params }: Props) {
+  const { category, slug } = await params
   if (!validCategories.includes(category)) notFound()
 
   const post = getPost(category, slug)
@@ -163,7 +172,8 @@ export default function PostPage({ params }: Props) {
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 8, alignItems: 'center', fontFamily: 'var(--font-lato)', fontSize: 12, color: '#666' }}>
           <Link href="/" style={{ color: '#666', textDecoration: 'none' }}>Home</Link>
           <span>›</span>
-          <Link href={`/${category}`} style={{ color: '#666', textDecoration: 'none' }}>{meta.label}</Link>
+          {/* NEW: Added trailing slash to match next.config.mjs trailingSlash: true */}
+          <Link href={`/${category}/`} style={{ color: '#666', textDecoration: 'none' }}>{meta.label}</Link>
           <span>›</span>
           <span style={{ color: '#aaa' }}>{post.title}</span>
         </div>

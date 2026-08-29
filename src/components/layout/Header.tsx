@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const navLinks = [
@@ -12,6 +13,7 @@ const navLinks = [
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <>
@@ -30,6 +32,7 @@ export default function Header() {
           white-space: nowrap;
         }
         .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+        .nav-link-active { background: #D32F2F !important; color: #fff !important; box-shadow: 0 4px 12px rgba(211,47,47,0.3); }
         .nav-subscribe {
           margin-left: 8px;
           background: #D32F2F;
@@ -42,10 +45,11 @@ export default function Header() {
           text-transform: uppercase;
           padding: 8px 16px;
           border-radius: 4px;
-          transition: background 0.15s;
+          transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
           white-space: nowrap;
+          box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
         }
-        .nav-subscribe:hover { background: #B71C1C; }
+        .nav-subscribe:hover { background: #B71C1C; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(211, 47, 47, 0.5); }
         .mobile-nav-link {
           display: block;
           color: #ccc;
@@ -57,7 +61,9 @@ export default function Header() {
           letter-spacing: 0.05em;
           padding: 14px 0;
           border-bottom: 1px solid #222;
+          transition: color 0.2s, padding-left 0.2s;
         }
+        .mobile-nav-link:hover { color: #D32F2F; padding-left: 6px; }
         .logo-pill {
           background: #ffffff;
           border-radius: 8px;
@@ -66,7 +72,9 @@ export default function Header() {
           align-items: center;
           justify-content: center;
           height: 54px;
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
+        .logo-pill:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(255,255,255,0.25); }
         .site-logo {
           height: 42px;
           width: auto;
@@ -84,7 +92,7 @@ export default function Header() {
         }
       `}</style>
 
-      <header style={{ background: '#1A1A1A', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+      <header style={{ background: 'rgba(26, 26, 26, 0.94)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 4px 20px rgba(0,0,0,0.4)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
 
           {/* Logo in white pill — preserves original colors */}
@@ -96,9 +104,12 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {navLinks.map(link => (
-              <Link key={link.href} href={link.href} className="nav-link">{link.label}</Link>
-            ))}
+            {navLinks.map(link => {
+              const isActive = pathname === link.href || pathname.startsWith(link.href)
+              return (
+                <Link key={link.href} href={link.href} className={`nav-link${isActive ? ' nav-link-active' : ''}`}>{link.label}</Link>
+              )
+            })}
             <Link href="/newsletter/" className="nav-subscribe">Subscribe Free</Link>
           </nav>
 
@@ -115,9 +126,13 @@ export default function Header() {
         {/* Mobile Menu */}
         {open && (
           <div style={{ background: '#111', borderTop: '1px solid #2a2a2a', padding: '8px 20px 24px' }}>
-            {navLinks.map(link => (
-              <Link key={link.href} href={link.href} className="mobile-nav-link" onClick={() => setOpen(false)}>{link.label}</Link>
-            ))}
+            {navLinks.map(link => {
+              const isActive = pathname === link.href || pathname.startsWith(link.href)
+              return (
+                <Link key={link.href} href={link.href} className="mobile-nav-link" onClick={() => setOpen(false)}
+                  style={isActive ? { color: '#fff', background: '#D32F2F', borderRadius: 4, paddingLeft: 12, paddingRight: 12, boxShadow: '0 4px 12px rgba(211,47,47,0.3)', borderBottom: 'none' } : undefined}>{link.label}</Link>
+              )
+            })}
             <Link href="/newsletter/" onClick={() => setOpen(false)}
               style={{ display: 'block', marginTop: 16, background: '#D32F2F', color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.06em', padding: '13px 20px', borderRadius: 4, textAlign: 'center' }}>
               Subscribe Free
