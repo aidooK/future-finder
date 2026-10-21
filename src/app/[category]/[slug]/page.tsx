@@ -192,9 +192,7 @@ export default async function PostPage({ params }: Props) {
                 {urgent ? '🔴 URGENT — ' : ''}Deadline: {formatDate(post.deadline)}
               </span>
             )}
-            <span style={{ fontSize: 12, color: '#aaa', fontFamily: 'var(--font-lato)', marginLeft: 'auto' }}>
-              Published {formatDate(post.date)}
-            </span>
+
           </div>
 
           <h1 style={{ fontFamily: 'var(--font-oswald)', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 700, color: '#1A1A1A', lineHeight: 1.15, marginBottom: 32 }}>

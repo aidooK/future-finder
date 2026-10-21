@@ -100,7 +100,7 @@ export default function PostCard({ post, size = 'default' }: Props) {
 
             {/* Footer */}
             <div style={{ marginTop: 'auto', paddingTop: 8, borderTop: '1px solid #f0f0f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 12, color: '#aaa', fontFamily: 'var(--font-lato)' }}>{formatDate(post.date)}</span>
+              <span style={{ fontSize: 12, color: '#aaa', fontFamily: 'var(--font-lato)' }}>📬 Posted recently</span>
               <span style={{ fontSize: 12, fontWeight: 700, color: '#D32F2F', fontFamily: 'var(--font-lato)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 Read More <span className="post-card-arrow">→</span>
               </span>
