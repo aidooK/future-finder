@@ -116,14 +116,13 @@ export default function WebinarPage() {
             And why schools don&rsquo;t teach you about money. A live webinar on financial habits, mindset, and breaking cycles of poverty — hosted jointly by Future Finder and Prepared Mind Initiative.
           </p>
           <a
-            href="https://queensu.qualtrics.com/jfe/form/SV_2skpzGTY6MedJJk"
+            href="#watch"
             style={{
               display: 'inline-block', background: '#D32F2F', color: '#fff',
               fontFamily: 'var(--font-lato)', fontWeight: 700, fontSize: 15,
               padding: '14px 32px', borderRadius: 6, textDecoration: 'none',
               letterSpacing: '0.04em', transition: 'background 0.15s'
             }}
-            target="_blank" rel="noopener noreferrer"
           >
             Watch Now ↓
           </a>
@@ -180,7 +179,7 @@ export default function WebinarPage() {
       </section>
 
       {/* Watch the Webinar — dual embeds */}
-      <section style={{ padding: '64px 24px', background: '#fff' }}>
+      <section id="watch" style={{ padding: '64px 24px', background: '#fff' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ marginBottom: 40, textAlign: 'center' }}>
             <h2 style={{
