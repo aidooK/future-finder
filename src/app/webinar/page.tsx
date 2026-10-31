@@ -1,10 +1,19 @@
-// Joint FF x PMI webinar page. Co-branded: the FF site header/footer are hidden
+// Joint FF x PMI live web conference page. Co-branded: the FF site header/footer are hidden
 // on this route (see SiteChrome) and replaced by the partnership header/footer below.
+
+// ===== EVENT-DAY CONFIG (edit only this block) =====
+// The two video IDs below are TEST streams. On event day, replace each with the ID of that
+// channel's live broadcast (the StreamYard broadcast on each YouTube channel).
+const FF_VIDEO_ID = 'NEn_jmXaPb0'    // TEST - Future Finder channel
+const PMI_VIDEO_ID = 'RiiducAV31M'   // TEST - Prepared Mind Initiative channel
+// Shown under the hero text when set, e.g. 'Saturday 15 November 2026, 6:00 PM GMT'. null hides it.
+const EVENT_WHEN: string | null = null
+// ====================================================
 
 // TODO: replace with each channel's URL once confirmed, e.g.
 //   'https://www.youtube.com/@handle?sub_confirmation=1'  (one-click subscribe prompt)
-const FF_YT = 'https://www.youtube.com/watch?v=NEn_jmXaPb0'
-const PMI_YT = 'https://www.youtube.com/watch?v=RiiducAV31M'
+const FF_YT = `https://www.youtube.com/watch?v=${FF_VIDEO_ID}`
+const PMI_YT = `https://www.youtube.com/watch?v=${PMI_VIDEO_ID}`
 
 const FF = '#D32F2F'
 const PMI = '#1565C0'
@@ -16,7 +25,7 @@ const topics = [
   { icon: '🚀', title: 'Your Next Step', desc: 'Where to find real opportunities and mentorship to put what you learn into action.' },
 ]
 
-export default function WebinarPage() {
+export default function WebConferencePage() {
   return (
     <div id="top">
       <style>{`
@@ -89,7 +98,7 @@ export default function WebinarPage() {
         </div>
       </header>
 
-      {/* Hero: partnership intro first, webinar title as the main focus */}
+      {/* Hero: partnership intro first, conference title as the main focus */}
       <section style={{ background: '#1A1A1A', padding: '48px 24px 56px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
 
@@ -111,10 +120,15 @@ export default function WebinarPage() {
             Poverty is a <span style={{ color: FF }}>Behaviour</span>
           </h1>
           <p style={{ fontFamily: 'var(--font-lato)', fontSize: 17, color: '#aaa', lineHeight: 1.8, maxWidth: 600, margin: '0 auto 28px' }}>
-            And why schools don&rsquo;t teach you about money. A webinar on financial habits, mindset and breaking cycles of poverty, presented jointly by both organisations.
+            And why schools don&rsquo;t teach you about money. A live web conference on financial habits, mindset and breaking cycles of poverty, presented jointly by both organisations and broadcast on both YouTube channels.
           </p>
+          {EVENT_WHEN && (
+            <p style={{ display: 'inline-block', fontFamily: 'var(--font-lato)', fontSize: 14, fontWeight: 700, color: '#fff', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: 20, padding: '8px 18px', margin: '0 0 24px' }}>
+              📅 {EVENT_WHEN}
+            </p>
+          )}
           <a href="#watch" style={{ display: 'inline-block', background: FF, color: '#fff', fontFamily: 'var(--font-lato)', fontWeight: 700, fontSize: 15, padding: '14px 32px', borderRadius: 6, textDecoration: 'none', letterSpacing: '0.04em' }}>
-            Watch Now ↓
+            Watch Live ↓
           </a>
         </div>
       </section>
@@ -125,11 +139,11 @@ export default function WebinarPage() {
       <section id="about" className="pw-section" style={{ padding: '60px 24px 40px', background: '#F5F5F5' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 28, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: 8 }}>
-            About This Webinar
+            About This Web Conference
           </h2>
           <div style={{ width: 48, height: 3, background: FF, margin: '0 auto 20px' }} />
           <p style={{ fontFamily: 'var(--font-lato)', fontSize: 16, color: '#444', lineHeight: 1.9 }}>
-            Poverty is a behaviour. Financial struggle is less about the lack of money and more about the patterns and habits people inherit and never question. In this webinar, Future Finder and Prepared Mind Initiative unpack why poverty is a behavioural cycle, how schools have failed us on financial education, and what African youth can do right now to break those patterns.
+            Poverty is a behaviour. Financial struggle is less about the lack of money and more about the patterns and habits people inherit and never question. In this live web conference, Future Finder and Prepared Mind Initiative unpack why poverty is a behavioural cycle, how schools have failed us on financial education, and what African youth can do right now to break those patterns.
           </p>
         </div>
       </section>
@@ -154,11 +168,11 @@ export default function WebinarPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ marginBottom: 40, textAlign: 'center' }}>
             <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 32, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: 8 }}>
-              Watch the Webinar
+              Watch Live
             </h2>
             <div style={{ width: 48, height: 3, background: FF, margin: '0 auto 16px' }} />
             <p style={{ fontFamily: 'var(--font-lato)', fontSize: 15, color: '#666' }}>
-              Streamed on both channels. Subscribe to each one to catch the next session.
+              Broadcast live on both YouTube channels. Subscribe to each one so you never miss a session.
             </p>
           </div>
 
@@ -174,7 +188,7 @@ export default function WebinarPage() {
               <div className="pw-card-body">
                 <div className="pw-embed">
                   <iframe
-                    src="https://www.youtube-nocookie.com/embed/NEn_jmXaPb0?si=_iBmR3MH91KVok66"
+                    src={`https://www.youtube-nocookie.com/embed/${FF_VIDEO_ID}`}
                     title="Poverty is a Behaviour, Future Finder channel"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
@@ -195,7 +209,7 @@ export default function WebinarPage() {
               <div className="pw-card-body">
                 <div className="pw-embed">
                   <iframe
-                    src="https://www.youtube-nocookie.com/embed/RiiducAV31M?si=-LnF1GASKsn9xwFD"
+                    src={`https://www.youtube-nocookie.com/embed/${PMI_VIDEO_ID}`}
                     title="Poverty is a Behaviour, Prepared Mind Initiative channel"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
@@ -216,7 +230,7 @@ export default function WebinarPage() {
               Subscribe to Both Channels
             </h2>
             <p style={{ fontFamily: 'var(--font-lato)', fontSize: 15, color: '#aaa', lineHeight: 1.8, maxWidth: 560, margin: '0 auto' }}>
-              This is the first of many conversations. Subscribe to both channels so you know when the next webinar goes live.
+              This is the first of many conversations. Subscribe to both channels so you know when the next web conference goes live.
             </p>
           </div>
           <div className="pw-sub-grid">
