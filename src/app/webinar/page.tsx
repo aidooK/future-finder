@@ -16,7 +16,7 @@ const FF_YT = `https://www.youtube.com/watch?v=${FF_VIDEO_ID}`
 const PMI_YT = `https://www.youtube.com/watch?v=${PMI_VIDEO_ID}`
 
 const FF = '#D32F2F'
-const PMI = '#1565C0'
+const PMI = '#0A53A8' // sampled from the PMI logo
 
 const topics = [
   { icon: '🧠', title: 'The Poverty Mindset', desc: 'Why behaviour is the real poverty, not the absence of money.' },
@@ -30,16 +30,16 @@ export default function WebConferencePage() {
     <div id="top">
       <style>{`
         html { scroll-behavior: smooth; }
-        .pw-section { scroll-margin-top: 76px; }
+        .pw-section { scroll-margin-top: 84px; }
         .pw-header { background: rgba(26,26,26,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
           position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .pw-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .pw-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
         .pw-lockup { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
-        .pw-logo-pill { background: #fff; border-radius: 8px; padding: 5px 12px; height: 44px; display: flex; align-items: center; flex-shrink: 0; }
-        .pw-logo-pill img { height: 32px; width: auto; display: block; }
+        .pw-logo-pill { background: #fff; border-radius: 8px; padding: 5px 12px; height: 56px; display: flex; align-items: center; flex-shrink: 0; }
+        .pw-logo-pill img { height: 34px; width: auto; display: block; }
+        .pw-pmi-pill { padding: 4px 10px; }
+        .pw-pmi-pill img { height: 48px; }
         .pw-x { color: #777; font-size: 20px; font-weight: 300; font-family: var(--font-lato); }
-        .pw-pmi-mark { width: 44px; height: 44px; border-radius: 8px; background: ${PMI}; color: #fff; display: flex; align-items: center; justify-content: center;
-          font-family: var(--font-oswald); font-weight: 700; font-size: 15px; letter-spacing: 0.04em; flex-shrink: 0; }
         .pw-pmi-name { color: #fff; font-family: var(--font-oswald); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1; }
         .pw-nav { display: flex; align-items: center; gap: 4px; }
         .pw-nav a { color: #ccc; text-decoration: none; font-family: var(--font-lato); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 8px 12px; border-radius: 4px; transition: color .15s, background .15s; }
@@ -87,7 +87,7 @@ export default function WebConferencePage() {
           <a href="#top" className="pw-lockup" aria-label="Future Finder and Prepared Mind Initiative">
             <span className="pw-logo-pill"><img src="/logo.png" alt="Future Finder" /></span>
             <span className="pw-x">×</span>
-            <span className="pw-pmi-mark">PMI</span>
+            <span className="pw-logo-pill pw-pmi-pill"><img src="/pmi-logo.png" alt="Prepared Mind Initiative (PMI)" /></span>
             <span className="pw-pmi-name">Prepared Mind<br />Initiative</span>
           </a>
           <nav className="pw-nav" aria-label="Page sections">
@@ -112,7 +112,7 @@ export default function WebConferencePage() {
             </div>
             <div className="pw-partner-row">
               <span className="pw-dot" style={{ background: '#42A5F5' }} />
-              <p><strong>Prepared Mind Initiative</strong> brings growth-mindset and digital-skills content, building minds that win.</p>
+              <p><strong>Prepared Mind Initiative</strong> brings growth-mindset and digital-skills content, building thoughtful, purposeful minds.</p>
             </div>
           </div>
 
@@ -244,7 +244,7 @@ export default function WebConferencePage() {
             </div>
             <div className="pw-sub-card" style={{ borderTop: `4px solid ${PMI}` }}>
               <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 8 }}>Prepared Mind Initiative</div>
-              <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', lineHeight: 1.7, margin: '0 0 20px' }}>Growth-mindset and digital-skills content, building minds that win.</p>
+              <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', lineHeight: 1.7, margin: '0 0 20px' }}>Growth-mindset and digital-skills content, building thoughtful, purposeful minds.</p>
               <a href={PMI_YT} target="_blank" rel="noopener noreferrer" className="pw-sub-btn" style={{ background: PMI, padding: '12px 24px', fontSize: 13 }}>▶ Subscribe on YouTube</a>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function WebConferencePage() {
           </div>
           <div>
             <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 16, fontWeight: 700, color: '#fff', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 6 }}>Prepared Mind Initiative</div>
-            <p style={{ fontFamily: 'var(--font-lato)', fontSize: 13, lineHeight: 1.7, margin: '0 0 8px' }}>Building minds that win.</p>
+            <p style={{ fontFamily: 'var(--font-lato)', fontSize: 13, lineHeight: 1.7, margin: '0 0 8px' }}>Building Thoughtful, Purposeful Minds.</p>
             <a href={PMI_YT} target="_blank" rel="noopener noreferrer" style={{ color: '#42A5F5', fontFamily: 'var(--font-lato)', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Subscribe on YouTube →</a>
           </div>
         </div>
