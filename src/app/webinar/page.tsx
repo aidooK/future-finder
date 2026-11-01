@@ -5,7 +5,7 @@
 // The two video IDs below are TEST streams. On event day, replace each with the ID of that
 // channel's live broadcast (the StreamYard broadcast on each YouTube channel).
 const FF_VIDEO_ID = 'NEn_jmXaPb0'    // TEST - Future Finder channel
-const PMI_VIDEO_ID = 'RiiducAV31M'   // TEST - Prepared Mind Initiative channel
+const PMI_VIDEO_ID = 'RiiducAV31M'   // TEST - The Prepared Mind Initiative channel
 // Shown under the hero text when set, e.g. 'Saturday 15 November 2026, 6:00 PM GMT'. null hides it.
 const EVENT_WHEN: string | null = null
 // ====================================================
@@ -84,11 +84,11 @@ export default function WebConferencePage() {
       {/* Co-branded header */}
       <header className="pw-header">
         <div className="pw-header-inner">
-          <a href="#top" className="pw-lockup" aria-label="Future Finder and Prepared Mind Initiative">
+          <a href="#top" className="pw-lockup" aria-label="Future Finder and The Prepared Mind Initiative">
             <span className="pw-logo-pill"><img src="/logo.png" alt="Future Finder" /></span>
             <span className="pw-x">×</span>
-            <span className="pw-logo-pill pw-pmi-pill"><img src="/pmi-logo.png" alt="Prepared Mind Initiative (PMI)" /></span>
-            <span className="pw-pmi-name">Prepared Mind<br />Initiative</span>
+            <span className="pw-logo-pill pw-pmi-pill"><img src="/pmi-logo.png" alt="The Prepared Mind Initiative (PMI)" /></span>
+            <span className="pw-pmi-name">The Prepared Mind<br />Initiative</span>
           </a>
           <nav className="pw-nav" aria-label="Page sections">
             <a href="#about" className="pw-nav-link">About</a>
@@ -112,7 +112,7 @@ export default function WebConferencePage() {
             </div>
             <div className="pw-partner-row">
               <span className="pw-dot" style={{ background: '#42A5F5' }} />
-              <p><strong>Prepared Mind Initiative</strong> brings growth-mindset and digital-skills content, building thoughtful, purposeful minds.</p>
+              <p><strong>The Prepared Mind Initiative</strong> brings growth-mindset and digital-skills content, building thoughtful, purposeful minds.</p>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default function WebConferencePage() {
           </h2>
           <div style={{ width: 48, height: 3, background: FF, margin: '0 auto 20px' }} />
           <p style={{ fontFamily: 'var(--font-lato)', fontSize: 16, color: '#444', lineHeight: 1.9 }}>
-            Poverty is a behaviour. Financial struggle is less about the lack of money and more about the patterns and habits people inherit and never question. In this live web conference, Future Finder and Prepared Mind Initiative unpack why poverty is a behavioural cycle, how schools have failed us on financial education, and what African youth can do right now to break those patterns.
+            Poverty is a behaviour. Financial struggle is less about the lack of money and more about the patterns and habits people inherit and never question. In this live web conference, Future Finder and The Prepared Mind Initiative unpack why poverty is a behavioural cycle, how schools have failed us on financial education, and what African youth can do right now to break those patterns.
           </p>
         </div>
       </section>
@@ -201,7 +201,7 @@ export default function WebConferencePage() {
             <div className="pw-card">
               <div className="pw-card-head" style={{ background: '#F5F8FF' }}>
                 <div className="pw-grow">
-                  <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 17, fontWeight: 700, color: '#1A1A1A' }}>Prepared Mind Initiative</div>
+                  <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 17, fontWeight: 700, color: '#1A1A1A' }}>The Prepared Mind Initiative</div>
                   <div style={{ fontFamily: 'var(--font-lato)', fontSize: 12, color: '#888' }}>YouTube channel</div>
                 </div>
                 <a href={PMI_YT} target="_blank" rel="noopener noreferrer" className="pw-sub-btn" style={{ background: PMI }}>▶ Subscribe</a>
@@ -210,7 +210,7 @@ export default function WebConferencePage() {
                 <div className="pw-embed">
                   <iframe
                     src={`https://www.youtube-nocookie.com/embed/${PMI_VIDEO_ID}`}
-                    title="Poverty is a Behaviour, Prepared Mind Initiative channel"
+                    title="Poverty is a Behaviour, The Prepared Mind Initiative channel"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
@@ -243,7 +243,7 @@ export default function WebConferencePage() {
               </div>
             </div>
             <div className="pw-sub-card" style={{ borderTop: `4px solid ${PMI}` }}>
-              <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 8 }}>Prepared Mind Initiative</div>
+              <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 8 }}>The Prepared Mind Initiative</div>
               <p style={{ fontFamily: 'var(--font-lato)', fontSize: 14, color: '#aaa', lineHeight: 1.7, margin: '0 0 20px' }}>Growth-mindset and digital-skills content, building thoughtful, purposeful minds.</p>
               <a href={PMI_YT} target="_blank" rel="noopener noreferrer" className="pw-sub-btn" style={{ background: PMI, padding: '12px 24px', fontSize: 13 }}>▶ Subscribe on YouTube</a>
             </div>
@@ -260,13 +260,13 @@ export default function WebConferencePage() {
             <a href={FF_YT} target="_blank" rel="noopener noreferrer" style={{ color: FF, fontFamily: 'var(--font-lato)', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Subscribe on YouTube →</a>
           </div>
           <div>
-            <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 16, fontWeight: 700, color: '#fff', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 6 }}>Prepared Mind Initiative</div>
+            <div style={{ fontFamily: 'var(--font-oswald)', fontSize: 16, fontWeight: 700, color: '#fff', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: 6 }}>The Prepared Mind Initiative</div>
             <p style={{ fontFamily: 'var(--font-lato)', fontSize: 13, lineHeight: 1.7, margin: '0 0 8px' }}>Building Thoughtful, Purposeful Minds.</p>
             <a href={PMI_YT} target="_blank" rel="noopener noreferrer" style={{ color: '#42A5F5', fontFamily: 'var(--font-lato)', fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>Subscribe on YouTube →</a>
           </div>
         </div>
         <div style={{ maxWidth: 1000, margin: '28px auto 0', padding: '18px 24px 0', borderTop: '1px solid #222', textAlign: 'center', fontFamily: 'var(--font-lato)', fontSize: 12, color: '#666' }}>
-          © 2026 Future Finder × Prepared Mind Initiative. Hosted at futurefinder.blog.
+          © 2026 Future Finder × The Prepared Mind Initiative. Hosted at futurefinder.blog.
         </div>
       </footer>
     </div>
