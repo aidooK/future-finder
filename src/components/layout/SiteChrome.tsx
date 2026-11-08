@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ScamWarningBanner from '@/components/ui/ScamWarningBanner'
 import SocialFollowBand from '@/components/ui/SocialFollowBand'
+import EventBanner from '@/components/webinar/EventBanner'
 
 // Partner pages (co-branded) supply their own header and footer,
 // so the Future Finder site chrome is skipped for them.
@@ -20,6 +21,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       <ScamWarningBanner />
+      <EventBanner />
       <Header />
       <main>{children}</main>
       <SocialFollowBand />
