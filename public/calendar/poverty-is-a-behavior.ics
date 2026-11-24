@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Future Finder//Poverty is a Behavior//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:poverty-is-a-behavior-2026-11-25@futurefinder.blog
+DTSTAMP:20261107T000000Z
+DTSTART:20261125T190000Z
+DTEND:20261125T210000Z
+SUMMARY:Poverty is a Behavior: Why Schools Don't Teach You About Money (Live on YouTube)
+DESCRIPTION:Free live web conference for young Africans by Future Finder and The Prepared Mind Initiative. Watch live: https://futurefinder.blog/webinar/
+LOCATION:https://futurefinder.blog/webinar/
+URL:https://futurefinder.blog/webinar/
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Poverty is a Behavior web conference is tomorrow at 7:00 PM GMT
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Poverty is a Behavior web conference starts in 30 minutes
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -2,10 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
 import '../styles/globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import ScamWarningBanner from '@/components/ui/ScamWarningBanner'
-import SocialFollowBand from '@/components/ui/SocialFollowBand'
+import SiteChrome from '@/components/layout/SiteChrome'
 
 const plusJakarta = localFont({
   src: '../fonts/plus-jakarta-sans-latin-700-normal.woff2',
@@ -96,11 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
-        <ScamWarningBanner />
-        <Header />
-        <main>{children}</main>
-        <SocialFollowBand />
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )
