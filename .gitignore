@@ -34,3 +34,17 @@ Thumbs.db
 
 # OG images are regenerated automatically on every build (see prebuild script)
 /public/og/
+
+# Build-time published content
+content/.published/
+public/media/published/
+public/deploy-manifest.json
+
+# Django CMS
+django-cms/.venv/
+django-cms/.env
+django-cms/local.sqlite3
+django-cms/private-media/
+django-cms/staticfiles/
+**/__pycache__/
+*.pyc

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { contactEmail, mailto } from '@/lib/contact'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Future Finder',
@@ -35,7 +36,7 @@ export default function PrivacyPage() {
         <hr className="privacy-divider" />
 
         <h2>1. Who We Are</h2>
-        <p>Future Finder is a free opportunities platform for African and Ghanaian youth, publishing daily listings of jobs, scholarships, study abroad programmes, entrepreneurship funding, and growth resources. We are operated from Ghana and can be reached at <a href="mailto:office.futurefinder@gmail.com">office.futurefinder@gmail.com</a>.</p>
+        <p>Future Finder is a free opportunities platform for African and Ghanaian youth, publishing daily listings of jobs, scholarships, study abroad programmes, entrepreneurship funding, and growth resources. We are operated from Ghana and can be reached at <a href={mailto()}>{contactEmail}</a>.</p>
 
         <h2>2. Information We Collect</h2>
         <p><strong>Information you provide directly:</strong> If you subscribe to our newsletter or submit a volunteer or opportunity form, we collect the information you enter — typically your name and email address.</p>
@@ -71,7 +72,7 @@ export default function PrivacyPage() {
           <li>Unsubscribe from our newsletter at any time using the unsubscribe link in any email</li>
           <li>Object to the processing of your personal data for marketing purposes</li>
         </ul>
-        <p>To exercise any of these rights, contact us at <a href="mailto:office.futurefinder@gmail.com">office.futurefinder@gmail.com</a>.</p>
+        <p>To exercise any of these rights, contact us at <a href={mailto()}>{contactEmail}</a>.</p>
 
         <h2>9. Children's Privacy</h2>
         <p>Future Finder is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
@@ -80,7 +81,7 @@ export default function PrivacyPage() {
         <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated date. We encourage you to review this page periodically.</p>
 
         <h2>11. Contact</h2>
-        <p>If you have any questions about this Privacy Policy, please email us at <a href="mailto:office.futurefinder@gmail.com">office.futurefinder@gmail.com</a>.</p>
+        <p>If you have any questions about this Privacy Policy, please email us at <a href={mailto()}>{contactEmail}</a>.</p>
 
         <hr className="privacy-divider" />
         <p style={{ fontSize: 13, color: '#999' }}>© {new Date().getFullYear()} Future Finder. All rights reserved.</p>

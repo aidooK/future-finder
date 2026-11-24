@@ -1,10 +1,33 @@
 import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import Script from 'next/script'
 import '../styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ScamWarningBanner from '@/components/ui/ScamWarningBanner'
 import SocialFollowBand from '@/components/ui/SocialFollowBand'
+
+const plusJakarta = localFont({
+  src: '../fonts/plus-jakarta-sans-latin-700-normal.woff2',
+  weight: '700',
+  style: 'normal',
+  display: 'swap',
+  variable: '--font-plus-jakarta',
+  fallback: ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+  adjustFontFallback: 'Arial',
+})
+
+const inter = localFont({
+  src: [
+    { path: '../fonts/inter-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/inter-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/inter-latin-600-normal.woff2', weight: '600', style: 'normal' },
+  ],
+  display: 'swap',
+  variable: '--font-inter',
+  fallback: ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+  adjustFontFallback: 'Arial',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -17,8 +40,11 @@ export const metadata: Metadata = {
   creator: 'Future Finder',
   metadataBase: new URL('https://futurefinder.blog'),
   icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    ],
+    apple: '/apple-touch-icon.png',
     shortcut: '/favicon.ico',
   },
   openGraph: {
@@ -43,10 +69,11 @@ const GA_ID = 'G-MSYRMXTCST'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         {/* Google AdSense */}
         <script
           async

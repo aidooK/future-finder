@@ -4,20 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/generate-og-images.mjs",
+    "prebuild": "node scripts/sync-published-content.mjs && node scripts/generate-og-images.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "node --test src/lib/opportunity.test.ts src/lib/article.test.ts src/lib/team.test.ts",
     "generate-og": "node scripts/generate-og-images.mjs"
   },
   "dependencies": {
     "@resvg/resvg-js": "latest",
-    "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "reading-time": "^1.5.0",
     "satori": "^0.11.1"
   },
   "devDependencies": {

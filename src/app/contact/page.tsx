@@ -1,87 +1,196 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import {
+  contactEmail,
+  mailto,
+  opportunitySubject,
+  partnershipSubject,
+  reportSubject,
+  submissionPath,
+} from '@/lib/contact'
 
 export const metadata: Metadata = {
   title: 'Contact Us | Future Finder',
-  description: 'Get in touch with the Future Finder team — partnerships, opportunity submissions, feedback, or general enquiries.',
+  description: 'Email Future Finder about a listing, a partnership, or an opportunity submission.',
 }
+
+const channels = [
+  {
+    title: 'General enquiries',
+    description: 'Questions, feedback, or a correction to a listing.',
+    action: 'Email support',
+    href: mailto(),
+    icon: 'mail' as const,
+  },
+  {
+    title: 'Partnerships',
+    description: 'Discuss sponsorships, featured listings, or collaborations.',
+    action: 'Discuss a partnership',
+    href: mailto(partnershipSubject),
+    icon: 'handshake' as const,
+  },
+  {
+    title: 'Submit an opportunity',
+    description: 'Share an opportunity for editorial review.',
+    action: 'Submit an opportunity',
+    href: submissionPath,
+    icon: 'send' as const,
+  },
+]
+
+const faqs = [
+  {
+    question: 'Is browsing Future Finder free?',
+    answer: (
+      <p>Browsing Future Finder is free. Individual opportunity providers may charge application fees or have other costs. Check the official listing before applying.</p>
+    ),
+  },
+  {
+    question: 'How do I submit an opportunity?',
+    answer: (
+      <p>
+        Use <Link href={submissionPath}>Submit an opportunity</Link> and send the name, deadline, application link, eligibility, and what the opportunity offers to <a href={mailto()}>{contactEmail}</a>. Use the subject &quot;{opportunitySubject}&quot;. Each submission is reviewed manually. Sending one does not mean it will be published.
+      </p>
+    ),
+  },
+  {
+    question: 'How do I discuss a partnership?',
+    answer: (
+      <p>
+        Email <a href={mailto(partnershipSubject)}>{contactEmail}</a> with the subject &quot;{partnershipSubject}&quot; to discuss a sponsorship, featured listing, or collaboration.
+      </p>
+    ),
+  },
+  {
+    question: 'How often are new listings published?',
+    answer: (
+      <p>Listings are published after they are reviewed. This site does not state a fixed posting schedule.</p>
+    ),
+  },
+  {
+    question: 'What if a listing looks wrong?',
+    answer: (
+      <p>
+        Email <a href={mailto(reportSubject)}>{contactEmail}</a> with the subject &quot;{reportSubject}&quot;. Include the listing name and what looks wrong.
+      </p>
+    ),
+  },
+  {
+    question: 'Do listings include opportunities outside Ghana?',
+    answer: (
+      <p>Yes. The site lists opportunities in Ghana, elsewhere in Africa, and international programmes for African applicants.</p>
+    ),
+  },
+  {
+    question: 'How are listings reviewed?',
+    answer: (
+      <p>Before a submitted listing is published, the team checks the source, whether the deadline is still open, and the application link. That review does not guarantee acceptance, availability, or that a listing will stay unchanged.</p>
+    ),
+  },
+]
 
 export default function ContactPage() {
   return (
     <>
-      <style>{`
-        .contact-hero { background: #1A1A1A; padding: 72px 24px 64px; }
-        .contact-wrap { max-width: 1000px; margin: 0 auto; padding: 72px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-        @media (max-width: 768px) { .contact-wrap { grid-template-columns: 1fr; gap: 40px; } }
-        .ccard { background: #F8F8F8; border: 1px solid #EFEFEF; border-radius: 12px; padding: 24px 20px; display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; transition: box-shadow 0.2s, border-color 0.2s; }
-        .ccard:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.07); border-color: #D32F2F; }
-        .ccard-icon { flex-shrink: 0; width: 42px; height: 42px; background: #D32F2F; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; }
-        .ccard-title { font-family: var(--font-oswald); font-size: 16px; font-weight: 600; color: #1A1A1A; margin-bottom: 5px; }
-        .ccard-body { font-family: var(--font-lato); font-size: 13px; color: #666; line-height: 1.65; }
-        .ccard-link { display: inline-block; margin-top: 8px; font-family: var(--font-lato); font-size: 12.5px; font-weight: 700; color: #D32F2F; text-decoration: none; }
-        .ccard-link:hover { text-decoration: underline; }
-        .eyebrow-sm { font-family: var(--font-lato); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D32F2F; margin-bottom: 10px; }
-        .faq-item { border-bottom: 1px solid #EFEFEF; padding: 16px 0; }
-        .faq-q { font-family: var(--font-oswald); font-size: 15px; font-weight: 600; color: #1A1A1A; margin-bottom: 6px; }
-        .faq-a { font-family: var(--font-lato); font-size: 13.5px; color: #555; line-height: 1.7; }
-        .notice-box { background: #FFF8F8; border: 1px solid #FFCDD2; border-left: 4px solid #D32F2F; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-top: 24px; font-family: var(--font-lato); font-size: 13px; color: #555; line-height: 1.7; }
-      `}</style>
-
       <section className="contact-hero">
-        <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
-          <p className="eyebrow-sm" style={{ color: '#888' }}>Get In Touch</p>
-          <h1 style={{ fontFamily: 'var(--font-oswald)', fontSize: 'clamp(32px, 5vw, 52px)', fontWeight: 700, color: '#fff', lineHeight: 1.1, marginBottom: 16 }}>We're Here to Help</h1>
-          <p style={{ fontFamily: 'var(--font-lato)', fontSize: 16, color: '#888', lineHeight: 1.75 }}>
-            Whether you want to submit an opportunity, explore a partnership, report a suspect listing, or just say hello — reach out and we'll respond promptly.
-          </p>
+        <div className="contact-hero-inner">
+          <p className="contact-eyebrow">Get in touch</p>
+          <h1>We&apos;re here to help</h1>
+          <p>Send a question, a partnership enquiry, or an opportunity for review.</p>
         </div>
       </section>
 
       <div className="contact-wrap">
-        <div>
-          <p className="eyebrow-sm">Contact Channels</p>
-          <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 26, fontWeight: 700, color: '#1A1A1A', marginBottom: 24 }}>Reach the Team</h2>
+        <section aria-labelledby="contact-heading">
+          <p className="contact-eyebrow">Contact</p>
+          <h2 id="contact-heading">Reach the team</h2>
+          <ul className="contact-list">
+            {channels.map(channel => (
+              <li key={channel.title} className="contact-card">
+                <span className="contact-badge" aria-hidden="true">
+                  <ContactIcon name={channel.icon} />
+                </span>
+                <div className="contact-copy">
+                  <h3>{channel.title}</h3>
+                  <p>{channel.description}</p>
+                  {channel.icon === 'mail' ? (
+                    <p className="contact-address">
+                      <a href={mailto()}>{contactEmail}</a>
+                    </p>
+                  ) : null}
+                  {channel.href.startsWith('/') ? (
+                    <Link className="contact-action" href={channel.href}>{channel.action}</Link>
+                  ) : (
+                    <a className="contact-action" href={channel.href}>{channel.action}</a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-          {[
-            { icon: '📧', title: 'General Enquiries', body: 'Questions, feedback, corrections — email us and we respond within 24–48 hours.', link: 'mailto:office.futurefinder@gmail.com', linkLabel: 'office.futurefinder@gmail.com' },
-            { icon: '🤝', title: 'Partnerships & Sponsorships', body: 'Feature your programme, sponsor content, or run a recruitment partnership with us.', link: 'mailto:office.futurefinder@gmail.com?subject=Partnership%20Enquiry', linkLabel: 'Email: Partnership Enquiry' },
-            { icon: '📢', title: 'Submit an Opportunity', body: 'Know of a legitimate opportunity we haven\'t covered? Share it — if it checks out, we\'ll post it.', link: '/submit', linkLabel: 'Use the submission form →' },
-            { icon: '🚩', title: 'Report a Scam or Expired Listing', body: 'Spot something suspicious or a passed deadline? Report it immediately and we\'ll act fast.', link: 'mailto:office.futurefinder@gmail.com?subject=Report%20a%20Listing', linkLabel: 'Email: Report a Listing' },
-            { icon: '💬', title: 'WhatsApp Community', body: 'Join 840+ subscribers getting daily opportunities on WhatsApp. Fastest way to stay updated.', link: 'https://linktr.ee/future.finder', linkLabel: 'Join via Linktree →', external: true },
-          ].map(({ icon, title, body, link, linkLabel, external }) => (
-            <div key={title} className="ccard">
-              <div className="ccard-icon">{icon}</div>
-              <div>
-                <div className="ccard-title">{title}</div>
-                <div className="ccard-body">{body}</div>
-                <a href={link} className="ccard-link" {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{linkLabel}</a>
-              </div>
-            </div>
-          ))}
-
-          <div className="notice-box">
-            <strong style={{ color: '#D32F2F' }}>Anti-Scam Notice:</strong> Future Finder will never ask you to pay for access to any opportunity. All services for opportunity seekers are completely free. Anyone requesting payment on our behalf is a fraudster.
+        <section aria-labelledby="faq-heading">
+          <p className="contact-eyebrow">FAQs</p>
+          <h2 id="faq-heading">Common questions</h2>
+          <div className="faq-list">
+            {faqs.map((item, index) => (
+              <details key={item.question} className="faq-item" open={index === 0}>
+                <summary>
+                  <span>{item.question}</span>
+                  <svg className="faq-marker" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </summary>
+                {item.answer}
+              </details>
+            ))}
           </div>
-        </div>
-
-        <div>
-          <p className="eyebrow-sm">FAQs</p>
-          <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 26, fontWeight: 700, color: '#1A1A1A', marginBottom: 24 }}>Common Questions</h2>
-          {[
-            { q: 'Is Future Finder free to use?', a: 'Yes — completely and always. Browsing and applying for any opportunity on Future Finder costs nothing. We will never charge our readers.' },
-            { q: 'How do I submit an opportunity?', a: 'Use our Submit an Opportunity page or email office.futurefinder@gmail.com. We review every submission before publishing and only list verified opportunities.' },
-            { q: 'Can my organisation pay to feature an opportunity?', a: 'Yes. We offer paid featured listings and partnership packages. Email us with "Partnership Enquiry" in the subject line to discuss options.' },
-            { q: 'How quickly are new opportunities posted?', a: 'We add opportunities daily. Join our WhatsApp channel for same-day alerts the moment new listings go live.' },
-            { q: 'I found a scam listing. What do I do?', a: 'Email office.futurefinder@gmail.com immediately with "Report a Listing" in the subject. Include the listing name and why you\'re suspicious. We act fast.' },
-            { q: 'Do you cover opportunities outside Ghana?', a: 'Yes. We cover opportunities across Africa and international opportunities targeting African applicants — including European scholarships, pan-African grants, and global competitions.' },
-            { q: 'How do I know a listing is legitimate?', a: 'We verify every listing before publishing — checking official websites, confirmed deadlines, and real application links. If something seems off after clicking, report it to us.' },
-          ].map(({ q, a }) => (
-            <div key={q} className="faq-item">
-              <div className="faq-q">{q}</div>
-              <div className="faq-a">{a}</div>
-            </div>
-          ))}
-        </div>
+        </section>
       </div>
     </>
+  )
+}
+
+function ContactIcon({ name }: { name: 'mail' | 'handshake' | 'send' }) {
+  const common = {
+    width: 24,
+    height: 24,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.75,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+    'aria-hidden': true as const,
+    focusable: false as const,
+  }
+
+  if (name === 'mail') {
+    return (
+      <svg {...common}>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </svg>
+    )
+  }
+
+  if (name === 'handshake') {
+    return (
+      <svg {...common}>
+        <path d="M8.2 13.2 5.6 10.6a1.8 1.8 0 0 1 0-2.5L8 5.7" />
+        <path d="m15.8 13.2 2.6-2.6a1.8 1.8 0 0 0 0-2.5L16 5.7" />
+        <path d="m8.2 13.2 2.1 2.1a1.6 1.6 0 0 0 2.2 0l1.1-1.1" />
+        <path d="M15.8 13.2 13.6 15.4" />
+        <path d="M4.2 15.2 7.2 18l2.1-1.3" />
+        <path d="M19.8 15.2 16.8 18l-2.1-1.3" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg {...common}>
+      <path d="m21 4-9.2 9.2" />
+      <path d="m21 4-6.4 16.2-2.8-6.6L5.2 10.8 21 4z" />
+    </svg>
   )
 }

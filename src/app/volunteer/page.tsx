@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import type { Metadata } from 'next'
+import { contactEmail } from '@/lib/contact'
 
 const roles = [
   {
@@ -295,7 +296,7 @@ export default function VolunteerPage() {
 
               {status === 'error' && (
                 <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 6, padding: '12px 16px', marginBottom: 20, fontFamily: 'var(--font-lato)', fontSize: 13, color: '#DC2626' }}>
-                  Something went wrong. Please email us directly at office.futurefinder@gmail.com
+                  Something went wrong. Please email us directly at {contactEmail}
                 </div>
               )}
 
@@ -304,7 +305,7 @@ export default function VolunteerPage() {
               </button>
 
               <p style={{ fontFamily: 'var(--font-lato)', fontSize: 12, color: '#aaa', textAlign: 'center', marginTop: 16 }}>
-                We review all applications within 5–7 business days. Questions? Email office.futurefinder@gmail.com
+                We review all applications within 5–7 business days. Questions? Email {contactEmail}
               </p>
             </form>
           )}

@@ -21,9 +21,9 @@ export default function Header() {
         .nav-link {
           color: #ccc;
           text-decoration: none;
-          font-size: 12px;
-          font-weight: 700;
-          font-family: var(--font-lato);
+          font-size: 13px;
+          font-weight: 600;
+          font-family: var(--font-body);
           letter-spacing: 0.06em;
           text-transform: uppercase;
           padding: 8px 10px;
@@ -38,9 +38,9 @@ export default function Header() {
           background: #D32F2F;
           color: #fff;
           text-decoration: none;
-          font-size: 11px;
-          font-weight: 700;
-          font-family: var(--font-lato);
+          font-size: 12px;
+          font-weight: 600;
+          font-family: var(--font-body);
           letter-spacing: 0.07em;
           text-transform: uppercase;
           padding: 8px 16px;
@@ -55,8 +55,8 @@ export default function Header() {
           color: #ccc;
           text-decoration: none;
           font-size: 15px;
-          font-weight: 700;
-          font-family: var(--font-lato);
+          font-weight: 600;
+          font-family: var(--font-body);
           text-transform: uppercase;
           letter-spacing: 0.05em;
           padding: 14px 0;
@@ -66,17 +66,17 @@ export default function Header() {
         .mobile-nav-link:hover { color: #D32F2F; padding-left: 6px; }
         .logo-pill {
           background: #ffffff;
-          border-radius: 8px;
-          padding: 6px 14px;
+          border-radius: 6px;
+          padding: 3px 8px;
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 54px;
+          height: 28px;
           transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .logo-pill:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(255,255,255,0.25); }
         .site-logo {
-          height: 42px;
+          height: 21px;
           width: auto;
           display: block;
           object-fit: contain;
@@ -84,8 +84,8 @@ export default function Header() {
         @media (max-width: 900px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
-          .logo-pill { height: 40px; padding: 4px 10px; }
-          .site-logo { height: 30px; }
+          .logo-pill { height: 22px; padding: 2px 6px; border-radius: 5px; }
+          .site-logo { height: 16px; }
         }
         @media (min-width: 901px) {
           .mobile-menu-btn { display: none !important; }
@@ -96,7 +96,7 @@ export default function Header() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
 
           {/* Logo in white pill — preserves original colors */}
-          <Link href="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
+          <Link href="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', minHeight: 44 }}>
             <div className="logo-pill">
               <img src="/logo.png" alt="Future Finder" className="site-logo" />
             </div>
@@ -110,7 +110,7 @@ export default function Header() {
                 <Link key={link.href} href={link.href} className={`nav-link${isActive ? ' nav-link-active' : ''}`}>{link.label}</Link>
               )
             })}
-            <Link href="/newsletter/" className="nav-subscribe">Subscribe Free</Link>
+            <Link href="/#newsletter" className="nav-subscribe">Subscribe Free</Link>
           </nav>
 
           {/* Mobile Hamburger */}
@@ -133,8 +133,8 @@ export default function Header() {
                   style={isActive ? { color: '#fff', background: '#D32F2F', borderRadius: 4, paddingLeft: 12, paddingRight: 12, boxShadow: '0 4px 12px rgba(211,47,47,0.3)', borderBottom: 'none' } : undefined}>{link.label}</Link>
               )
             })}
-            <Link href="/newsletter/" onClick={() => setOpen(false)}
-              style={{ display: 'block', marginTop: 16, background: '#D32F2F', color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-lato)', textTransform: 'uppercase', letterSpacing: '0.06em', padding: '13px 20px', borderRadius: 4, textAlign: 'center' }}>
+            <Link href="/#newsletter" onClick={() => setOpen(false)}
+              style={{ display: 'block', marginTop: 16, background: '#D32F2F', color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 600, fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.04em', padding: '13px 20px', borderRadius: 4, textAlign: 'center' }}>
               Subscribe Free
             </Link>
           </div>

@@ -233,9 +233,9 @@ async function main() {
 
   const VALID_CATEGORIES = ['jobs', 'scholarships', 'study-abroad', 'entrepreneurship', 'growth-mindset']
 
-  const categories = fs.readdirSync(CONTENT_DIR).filter(d =>
-    fs.statSync(path.join(CONTENT_DIR, d)).isDirectory() &&
-    VALID_CATEGORIES.includes(d)
+  const categories = VALID_CATEGORIES.filter(category =>
+    fs.existsSync(path.join(CONTENT_DIR, category)) ||
+    fs.existsSync(path.join(CONTENT_DIR, '.published', category))
   )
 
   let generated = 0
@@ -243,12 +243,16 @@ async function main() {
   let failed = 0
 
   for (const category of categories) {
-    const dir = path.join(CONTENT_DIR, category)
-    const files = fs.readdirSync(dir).filter(f => f.endsWith('.mdx'))
+    const files = new Map()
+    for (const dir of [path.join(CONTENT_DIR, category), path.join(CONTENT_DIR, '.published', category)]) {
+      if (!fs.existsSync(dir)) continue
+      for (const file of fs.readdirSync(dir).filter(name => name.endsWith('.mdx'))) {
+        files.set(file.replace(/\.mdx$/, ''), path.join(dir, file))
+      }
+    }
 
-    for (const file of files) {
-      const slug = file.replace(/\.mdx$/, '')
-      const raw = fs.readFileSync(path.join(dir, file), 'utf-8')
+    for (const [slug, filePath] of files) {
+      const raw = fs.readFileSync(filePath, 'utf-8')
       const { data } = matter(raw)
 
       // Skip posts that already have a real cover image — don't override editorial images.

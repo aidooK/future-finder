@@ -1,36 +1,22 @@
 import Link from 'next/link'
-import { getRecentPosts, categoryMeta } from '@/lib/content'
-import PostCard from '@/components/ui/PostCard'
+import { getRecentPosts, getAllPosts, getJobCards } from '@/lib/content'
+import { LatestJobs } from '@/components/ui/JobLists'
+import { ListingCards, OpenPosts } from '@/components/ui/OpenPosts'
 import NewsletterSignup from '@/components/ui/NewsletterSignup'
 import HeroSection from '@/components/ui/HeroSection'
+import CategoryNav from '@/components/ui/CategoryNav'
 
 export default function HomePage() {
-  const jobs = getRecentPosts('jobs', 4)
-  const scholarships = getRecentPosts('scholarships', 3)
-  const studyAbroad = getRecentPosts('study-abroad', 2)
-  const entrepreneurship = getRecentPosts('entrepreneurship', 2)
+  const jobs = getJobCards()
+  const evaluatedAt = new Date().toISOString()
+  const scholarships = getAllPosts('scholarships')
+  const studyAbroad = getAllPosts('study-abroad')
+  const entrepreneurship = getAllPosts('entrepreneurship')
   const growthMindset = getRecentPosts('growth-mindset', 2)
 
   return (
     <>
       <style>{`
-        .cat-strip-link {
-          flex: 1 0 auto;
-          text-decoration: none;
-          padding: 16px 24px;
-          text-align: center;
-          border-right: 1px solid #2A2A2A;
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-          font-family: var(--font-lato);
-          font-size: 13px;
-          font-weight: 700;
-          color: #aaa;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          white-space: nowrap;
-          position: relative;
-        }
-        .cat-strip-link:hover { background: #D32F2F; color: #fff; transform: translateY(-1px); }
         .two-col-section {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -53,6 +39,15 @@ export default function HomePage() {
           color: #B71C1C;
           transform: translateX(3px);
         }
+        .see-all-link:focus-visible {
+          outline: 3px solid #1565C0;
+          outline-offset: 3px;
+          border-radius: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .see-all-link,
+          .see-all-link:hover { transition: none; transform: none; }
+        }
         @media (max-width: 768px) {
           .two-col-section { grid-template-columns: 1fr !important; }
         }
@@ -61,28 +56,33 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <HeroSection />
 
-      {/* ── CATEGORY STRIP ── */}
-      <section style={{ background: '#1A1A1A' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', overflowX: 'auto' }}>
-          {Object.entries(categoryMeta).map(([slug, meta]) => (
-            /* NEW: Added trailing slash to match next.config.mjs `trailingSlash: true` */
-            <Link key={slug} href={`/${slug}/`} className="cat-strip-link">{meta.label}</Link>
-          ))}
-        </div>
-      </section>
+      <CategoryNav />
 
       {/* ── LATEST JOBS ── */}
-      <SectionBlock title="Latest Jobs" href="/jobs/" bg="#fff">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
-          {jobs.length > 0 ? jobs.map(p => <PostCard key={p.slug} post={p} />) : <EmptyState category="jobs" />}
-        </div>
+      <SectionBlock
+        plain
+        title="Latest jobs and internships"
+        subtitle="Open roles and internships, with who can apply and when applications close."
+        href="/jobs/"
+        linkLabel="Browse all jobs and internships"
+        linkClassName="jobs-index-link"
+        bg="#F4F6F8"
+      >
+        {jobs.length > 0 ? <LatestJobs jobs={jobs} initialNow={evaluatedAt} /> : <EmptyState category="jobs" />}
       </SectionBlock>
 
       {/* ── SCHOLARSHIPS ── */}
-      <SectionBlock title="Open Scholarships" href="/scholarships/" bg="#F5F5F5">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
-          {scholarships.length > 0 ? scholarships.map(p => <PostCard key={p.slug} post={p} />) : <EmptyState category="scholarships" />}
-        </div>
+      <SectionBlock
+        plain
+        title="Open scholarships"
+        href="/scholarships/"
+        linkLabel="Browse all scholarships"
+        linkClassName="jobs-index-link"
+        bg="#F4F6F8"
+      >
+        {scholarships.length > 0 ? (
+          <OpenPosts posts={scholarships} limit={3} initialNow={evaluatedAt} empty="No scholarships with an open deadline right now." />
+        ) : <EmptyState category="scholarships" />}
       </SectionBlock>
 
       {/* ── STUDY ABROAD + ENTREPRENEURSHIP ── */}
@@ -90,15 +90,15 @@ export default function HomePage() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }} className="two-col-section">
           <div>
             <SectionHeading title="Study Abroad" href="/study-abroad/" />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {studyAbroad.length > 0 ? studyAbroad.map(p => <PostCard key={p.slug} post={p} />) : <EmptyState category="study-abroad" />}
-            </div>
+            {studyAbroad.length > 0 ? (
+              <OpenPosts posts={studyAbroad} limit={2} initialNow={evaluatedAt} layout="stack" empty="No study abroad programs with an open deadline right now." />
+            ) : <EmptyState category="study-abroad" />}
           </div>
           <div>
             <SectionHeading title="Entrepreneurship" href="/entrepreneurship/" />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {entrepreneurship.length > 0 ? entrepreneurship.map(p => <PostCard key={p.slug} post={p} />) : <EmptyState category="entrepreneurship" />}
-            </div>
+            {entrepreneurship.length > 0 ? (
+              <OpenPosts posts={entrepreneurship} limit={2} initialNow={evaluatedAt} layout="stack" empty="No entrepreneurship programs with an open deadline right now." />
+            ) : <EmptyState category="entrepreneurship" />}
           </div>
         </div>
       </section>
@@ -108,31 +108,64 @@ export default function HomePage() {
 
       {/* ── GROWTH MINDSET ── */}
       <SectionBlock title="Growth Mindset" href="/growth-mindset/" bg="#F5F5F5">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
-          {growthMindset.length > 0 ? growthMindset.map(p => <PostCard key={p.slug} post={p} size="large" />) : <EmptyState category="growth-mindset" />}
-        </div>
+        {growthMindset.length > 0 ? <ListingCards posts={growthMindset} initialNow={evaluatedAt} /> : <EmptyState category="growth-mindset" />}
       </SectionBlock>
     </>
   )
 }
 
-function SectionHeading({ title, href }: { title: string; href: string }) {
+function SectionHeading({
+  title,
+  href,
+  subtitle,
+  linkLabel = 'See All',
+  linkClassName = 'see-all-link',
+  plain = false,
+}: {
+  title: string
+  href: string
+  subtitle?: string
+  linkLabel?: string
+  linkClassName?: string
+  plain?: boolean
+}) {
   return (
-    <div style={{ marginBottom: 24 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
-        <h2 style={{ fontFamily: 'var(--font-oswald)', fontSize: 26, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{title}</h2>
-        <Link href={href} className="see-all-link">See All →</Link>
+    <div className={plain ? 'opportunity-section-head' : undefined} style={plain ? undefined : { marginBottom: 24 }}>
+      <div className={plain ? 'opportunity-head-row' : undefined} style={plain ? undefined : { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap', marginBottom: 8 }}>
+        <h2 className={plain ? 'opportunity-heading' : undefined} style={plain ? undefined : { fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, color: '#1A1A1A', letterSpacing: '-0.02em' }}>{title}</h2>
+        <Link href={href} className={linkClassName}>
+          {linkLabel} <span aria-hidden="true">→</span>
+        </Link>
       </div>
-      <div style={{ width: 44, height: 3, background: '#D32F2F', borderRadius: 2 }} />
+      {subtitle ? <p className="section-subtitle">{subtitle}</p> : null}
+      {plain ? null : <div style={{ width: 44, height: 3, background: '#D32F2F', borderRadius: 2 }} />}
     </div>
   )
 }
 
-function SectionBlock({ title, href, bg, children }: { title: string; href: string; bg: string; children: React.ReactNode }) {
+function SectionBlock({
+  title,
+  href,
+  bg,
+  children,
+  subtitle,
+  linkLabel,
+  linkClassName,
+  plain = false,
+}: {
+  title: string
+  href: string
+  bg: string
+  children: React.ReactNode
+  subtitle?: string
+  linkLabel?: string
+  linkClassName?: string
+  plain?: boolean
+}) {
   return (
     <section style={{ background: bg, padding: '64px 24px' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <SectionHeading title={title} href={href} />
+      <div style={{ maxWidth: plain ? 1160 : 1200, margin: '0 auto' }}>
+        <SectionHeading title={title} href={href} subtitle={subtitle} linkLabel={linkLabel} linkClassName={linkClassName} plain={plain} />
         {children}
       </div>
     </section>
